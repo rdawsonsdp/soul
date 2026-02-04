@@ -119,10 +119,10 @@ function getProductsForSubsection(subsectionId: string): CateringProduct[] {
       p.categories.includes('lunch') &&
       ['coleslaw', 'potato-salad', 'cold-pasta-salad', 'pesto-pasta-salad'].includes(p.id),
     'hot-beverages': (p) =>
-      p.tags?.includes('beverage') &&
+      (p.tags?.includes('beverage') ?? false) &&
       ['fresh-brewed-coffee', 'hot-tea', 'hot-chocolate'].includes(p.id),
     'cold-beverages': (p) =>
-      p.tags?.includes('beverage') &&
+      (p.tags?.includes('beverage') ?? false) &&
       ['cold-brew-coffee', 'bottled-juices', 'coconut-water', 'bottled-water', 'assorted-sodas', 'sparkling-water', 'iced-tea', 'celsius-energy', 'red-bull'].includes(p.id),
   };
 
