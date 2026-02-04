@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import { useCatering } from '@/context/CateringContext';
 import { formatCurrency } from '@/lib/pricing';
 import { getEventTypeName } from '@/lib/event-types';
@@ -20,6 +21,8 @@ export default function CateringCart({ onCheckout }: CateringCartProps) {
     canProceedToCheckout,
   } = useCatering();
 
+  const [showResetConfirm, setShowResetConfirm] = useState(false);
+
   const handleHeadcountChange = (value: number) => {
     dispatch({ type: 'SET_HEADCOUNT', payload: Math.max(1, value) });
   };
@@ -30,6 +33,11 @@ export default function CateringCart({ onCheckout }: CateringCartProps) {
 
   const handleClearAll = () => {
     dispatch({ type: 'CLEAR_ITEMS' });
+  };
+
+  const handleResetOrder = () => {
+    dispatch({ type: 'RESET' });
+    setShowResetConfirm(false);
   };
 
   const quickHeadcounts = [10, 25, 50, 100, 150, 200];
@@ -204,6 +212,41 @@ export default function CateringCart({ onCheckout }: CateringCartProps) {
           </Button>
         </>
       )}
+
+      {/* Reset Order Bar */}
+      <div className="mt-6 pt-4 border-t border-gray-200">
+        {!showResetConfirm ? (
+          <button
+            onClick={() => setShowResetConfirm(true)}
+            className="w-full flex items-center justify-center gap-2 text-sm text-gray-400 hover:text-gray-600 transition-colors py-2"
+          >
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+            </svg>
+            Start Over
+          </button>
+        ) : (
+          <div className="bg-red-50 rounded-lg p-3 animate-scale-in">
+            <p className="text-sm text-gray-700 text-center mb-3">
+              Reset your entire order?
+            </p>
+            <div className="flex gap-2">
+              <button
+                onClick={() => setShowResetConfirm(false)}
+                className="flex-1 px-3 py-2 text-sm font-medium text-gray-600 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleResetOrder}
+                className="flex-1 px-3 py-2 text-sm font-medium text-white bg-red-500 rounded-lg hover:bg-red-600 transition-colors"
+              >
+                Yes, Reset
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
     </Card>
   );
 }

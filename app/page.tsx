@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import Link from 'next/link';
 import { useCatering } from '@/context/CateringContext';
 import { EVENT_TYPES } from '@/lib/event-types';
 import ProductSelectionStep from '@/components/catering/ProductSelectionStep';
@@ -131,6 +132,32 @@ export default function HomePage() {
       {state.currentStep >= 2 && (
         <ProductSelectionStep />
       )}
+
+      {/* Browse Full Menu Link */}
+      <section className="bg-[#363333] py-12 sm:py-16">
+        <div className="container mx-auto px-4 text-center">
+          <h3 className="font-oswald text-2xl sm:text-3xl font-bold text-[#f7efd7] mb-3 tracking-wide">
+            LOOKING FOR SOMETHING ELSE?
+          </h3>
+          <p className="text-white/70 mb-6 max-w-xl mx-auto">
+            Browse our complete menu with over 90 items including breakfast, lunch, dinner, snacks, and beverages.
+          </p>
+          <Link
+            href="/products"
+            className="inline-flex items-center gap-2 bg-[#dabb64] text-[#363333] font-oswald font-bold px-8 py-3 rounded-lg hover:bg-[#f7efd7] transition-all group"
+          >
+            <span>Browse Full Menu</span>
+            <svg
+              className="w-5 h-5 group-hover:translate-x-1 transition-transform"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+            </svg>
+          </Link>
+        </div>
+      </section>
     </div>
   );
 }
