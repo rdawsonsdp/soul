@@ -20,9 +20,9 @@ export default function HomePage() {
     <div className="min-h-screen bg-[#f7efd7]">
       {/* Hero Section */}
       <section className="relative">
-        {/* Two-Image Hero */}
-        <div className="grid grid-cols-1 md:grid-cols-2">
-          <div className="relative h-[250px] sm:h-[350px] md:h-[450px] overflow-hidden">
+        {/* Two-Image Hero - Smaller on mobile */}
+        <div className="grid grid-cols-2 md:grid-cols-2">
+          <div className="relative h-[120px] sm:h-[200px] md:h-[350px] lg:h-[450px] overflow-hidden">
             <Image
               src="/images/Yogurt Parfait Shot High Res.png"
               alt="Yogurt Parfait"
@@ -31,7 +31,7 @@ export default function HomePage() {
               priority
             />
           </div>
-          <div className="relative h-[250px] sm:h-[350px] md:h-[450px] overflow-hidden">
+          <div className="relative h-[120px] sm:h-[200px] md:h-[350px] lg:h-[450px] overflow-hidden">
             <Image
               src="/images/Stacked Sandwiches Hi Res Shot.png"
               alt="Gourmet Sandwiches"
@@ -95,7 +95,7 @@ export default function HomePage() {
                     className={`
                       relative overflow-hidden rounded-xl cursor-pointer
                       transition-all duration-300 hover:scale-105 shadow-md
-                      h-[280px] sm:h-[320px]
+                      h-[180px] sm:h-[240px] md:h-[320px]
                       ${state.eventType === eventType.id
                         ? 'ring-4 ring-[#dabb64]'
                         : ''

@@ -11,9 +11,9 @@ export default function Header() {
 
   const navLinks = [
     { href: '/', label: 'HOME' },
-    { href: '#menus', label: 'OUR MENUS' },
+    { href: '/menus', label: 'OUR MENUS' },
     { href: '#delivery', label: 'DELIVERY' },
-    { href: '#catering', label: 'CATERING' },
+    { href: '/#catering', label: 'CATERING' },
     { href: '#network', label: 'JOIN OUR NETWORK' },
     { href: '#about', label: 'ABOUT US' },
   ];
