@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { useCatering } from '@/context/CateringContext';
 import { getEventTypeName } from '@/lib/event-types';
 import { formatCurrency, getDisplayPrice, getPricingTypeLabel } from '@/lib/pricing';
@@ -11,6 +12,7 @@ import Card from '@/components/ui/Card';
 import Badge from '@/components/ui/Badge';
 
 export default function ProductSelectionStep() {
+  const router = useRouter();
   const { state, dispatch, perPersonCost } = useCatering();
   const [searchTerm, setSearchTerm] = useState('');
 
@@ -37,7 +39,7 @@ export default function ProductSelectionStep() {
   });
 
   const handleCheckout = () => {
-    alert('Checkout functionality would redirect to Shopify checkout here.');
+    router.push('/checkout');
   };
 
   const handleBack = () => {
