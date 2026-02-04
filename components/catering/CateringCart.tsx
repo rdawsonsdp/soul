@@ -42,6 +42,23 @@ export default function CateringCart({ onCheckout }: CateringCartProps) {
 
   const quickHeadcounts = [10, 25, 50, 100, 150, 200];
 
+  // Calculate delivery fee based on order size
+  const getDeliveryFee = (headcount: number): number => {
+    if (headcount <= 25) return 75;   // Small order
+    if (headcount <= 50) return 125;  // Medium order
+    return 200;                        // Large order (>50)
+  };
+
+  const getOrderSizeLabel = (headcount: number): string => {
+    if (headcount <= 25) return 'Small';
+    if (headcount <= 50) return 'Medium';
+    return 'Large';
+  };
+
+  const deliveryFee = getDeliveryFee(state.headcount);
+  const orderTotal = totalCost + (calculatedItems.length > 0 ? deliveryFee : 0);
+  const totalPerPerson = calculatedItems.length > 0 ? orderTotal / state.headcount : 0;
+
   return (
     <Card className="sticky top-20 sm:top-24 lg:top-4 animate-scale-in delay-200 bg-[#f7efd7]" hover={false}>
       {/* Header */}
@@ -57,13 +74,13 @@ export default function CateringCart({ onCheckout }: CateringCartProps) {
           <div>
             <p className="text-xs text-gray-500 uppercase tracking-wide mb-1">Per Person</p>
             <p className="font-oswald text-2xl sm:text-3xl font-bold text-[#363333]">
-              {formatCurrency(perPersonCost)}
+              {formatCurrency(totalPerPerson)}
             </p>
           </div>
           <div>
             <p className="text-xs text-gray-500 uppercase tracking-wide mb-1">Total</p>
             <p className="font-oswald text-2xl sm:text-3xl font-bold text-[#dabb64]">
-              {formatCurrency(totalCost)}
+              {formatCurrency(orderTotal)}
             </p>
           </div>
         </div>
@@ -194,10 +211,28 @@ export default function CateringCart({ onCheckout }: CateringCartProps) {
                 {formatCurrency(totalCost)}
               </span>
             </div>
+            <div className="flex justify-between text-sm">
+              <div className="flex items-center gap-1.5">
+                <svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
+                </svg>
+                <span className="text-gray-600">Delivery</span>
+                <span className="text-xs text-gray-400">({getOrderSizeLabel(state.headcount)})</span>
+              </div>
+              <span className="font-semibold text-[#363333]">
+                {formatCurrency(deliveryFee)}
+              </span>
+            </div>
+            <div className="flex justify-between text-sm pt-2 border-t border-gray-200">
+              <span className="text-gray-600 font-medium">Order Total</span>
+              <span className="font-bold text-[#363333]">
+                {formatCurrency(orderTotal)}
+              </span>
+            </div>
             <div className="flex justify-between text-lg font-oswald font-bold pt-2 border-t border-gray-200">
               <span className="text-[#363333]">Per Person</span>
               <span className="text-[#dabb64]">
-                {formatCurrency(perPersonCost)}
+                {formatCurrency(totalPerPerson)}
               </span>
             </div>
           </div>
