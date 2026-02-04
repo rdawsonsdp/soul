@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useCatering } from '@/context/CateringContext';
 import { getEventTypeName } from '@/lib/event-types';
@@ -13,8 +13,39 @@ import Badge from '@/components/ui/Badge';
 
 export default function ProductSelectionStep() {
   const router = useRouter();
-  const { state, dispatch, perPersonCost } = useCatering();
+  const { state, dispatch, perPersonCost, totalCost } = useCatering();
   const [searchTerm, setSearchTerm] = useState('');
+  const [isCartOpen, setIsCartOpen] = useState(false);
+
+  // Calculate delivery and total for mobile cart button
+  const getDeliveryFee = (headcount: number): number => {
+    if (headcount <= 25) return 75;
+    if (headcount <= 50) return 125;
+    return 200;
+  };
+  const deliveryFee = getDeliveryFee(state.headcount);
+  const orderTotal = totalCost + (state.selectedItems.length > 0 ? deliveryFee : 0);
+
+  // Close cart when pressing Escape
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setIsCartOpen(false);
+    };
+    document.addEventListener('keydown', handleEscape);
+    return () => document.removeEventListener('keydown', handleEscape);
+  }, []);
+
+  // Prevent body scroll when cart is open on mobile
+  useEffect(() => {
+    if (isCartOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isCartOpen]);
 
   // Get products filtered by event type from local data
   const products = getProductsByEventType(state.eventType);
@@ -116,7 +147,7 @@ export default function ProductSelectionStep() {
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
           {/* Product Grid */}
-          <div className="lg:col-span-2 order-2 lg:order-1">
+          <div className="lg:col-span-2">
             {sortedProducts.length === 0 ? (
               <Card className="text-center py-12">
                 <p className="text-gray-500">
@@ -126,7 +157,7 @@ export default function ProductSelectionStep() {
                 </p>
               </Card>
             ) : (
-              <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6">
+              <div className="grid grid-cols-2 sm:grid-cols-2 xl:grid-cols-3 gap-3 sm:gap-6">
                 {sortedProducts.map((product, index) => (
                   <div
                     key={product.id}
@@ -140,11 +171,71 @@ export default function ProductSelectionStep() {
             )}
           </div>
 
-          {/* Cart Sidebar */}
-          <div className="lg:col-span-1 order-1 lg:order-2">
+          {/* Cart Sidebar - Desktop Only */}
+          <div className="hidden lg:block lg:col-span-1">
             <CateringCart onCheckout={handleCheckout} />
           </div>
         </div>
+
+        {/* Mobile Cart Button - Fixed at bottom */}
+        <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 p-4 bg-gradient-to-t from-white via-white to-transparent">
+          <button
+            onClick={() => setIsCartOpen(true)}
+            className="w-full bg-[#363333] text-white rounded-xl py-4 px-6 flex items-center justify-between shadow-lg hover:bg-[#4a4646] transition-colors"
+          >
+            <div className="flex items-center gap-3">
+              <div className="relative">
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                </svg>
+                {state.selectedItems.length > 0 && (
+                  <span className="absolute -top-2 -right-2 bg-[#dabb64] text-[#363333] text-xs font-bold w-5 h-5 flex items-center justify-center rounded-full">
+                    {state.selectedItems.length}
+                  </span>
+                )}
+              </div>
+              <span className="font-oswald font-semibold">
+                {state.selectedItems.length === 0 ? 'View Cart' : `${state.selectedItems.length} item${state.selectedItems.length !== 1 ? 's' : ''}`}
+              </span>
+            </div>
+            {state.selectedItems.length > 0 && (
+              <span className="font-oswald font-bold text-[#dabb64]">
+                {formatCurrency(orderTotal)}
+              </span>
+            )}
+          </button>
+        </div>
+
+        {/* Mobile Cart Drawer */}
+        {isCartOpen && (
+          <>
+            {/* Overlay */}
+            <div
+              className="lg:hidden fixed inset-0 bg-black/50 z-50"
+              onClick={() => setIsCartOpen(false)}
+            />
+            {/* Drawer */}
+            <div className="lg:hidden fixed inset-y-0 right-0 w-full max-w-md bg-[#f7efd7] z-50 shadow-2xl animate-slide-in-right overflow-y-auto">
+              {/* Drawer Header */}
+              <div className="sticky top-0 bg-[#363333] text-white px-4 py-4 flex items-center justify-between z-10">
+                <h2 className="font-oswald text-xl font-bold tracking-wide">Your Order</h2>
+                <button
+                  onClick={() => setIsCartOpen(false)}
+                  className="p-2 hover:bg-white/10 rounded-lg transition-colors"
+                  aria-label="Close cart"
+                >
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+              {/* Cart Content */}
+              <div className="p-4 pb-24">
+                <CateringCart onCheckout={() => { setIsCartOpen(false); handleCheckout(); }} />
+              </div>
+            </div>
+          </>
+        )}
 
         {/* Back button */}
         <div className="mt-10 text-center">
