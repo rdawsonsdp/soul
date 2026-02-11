@@ -1,5 +1,5 @@
 // Event Types
-export type EventType = 'breakfast' | 'lunch' | 'snack';
+export type EventType = 'breakfast' | 'lunch' | 'dessert';
 
 // Pricing Types
 export type PricingType = 'tray' | 'pan' | 'per-person' | 'per-dozen' | 'per-each' | 'per-container';

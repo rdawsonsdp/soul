@@ -88,7 +88,7 @@ export default function ProductSelectionStep() {
         <div className="text-center mb-10">
           <div className="flex flex-wrap items-center justify-center gap-2 mb-4">
             {state.eventType && (
-              <Badge variant={state.eventType as 'breakfast' | 'lunch' | 'snack'}>
+              <Badge variant={state.eventType as 'breakfast' | 'lunch' | 'dessert'}>
                 {getEventTypeName(state.eventType)}
               </Badge>
             )}

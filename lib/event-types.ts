@@ -16,11 +16,11 @@ export const EVENT_TYPES: EventTypeConfig[] = [
     suggestedItems: ['sandwich trays', 'salads', 'savory items', 'dessert trays'],
   },
   {
-    id: 'snack',
-    name: 'Snack / Break',
-    description: 'Coffee breaks, afternoon treats, and light refreshments',
-    icon: '🍪',
-    suggestedItems: ['cookies', 'brownies', 'bars', 'mini pastries', 'cake slices'],
+    id: 'dessert',
+    name: 'Dessert',
+    description: 'Sweet treats, cakes, and delicious endings',
+    icon: '🍰',
+    suggestedItems: ['cake slices', 'cheesecake', 'cookies', 'brownies', 'pies'],
   },
 ];
 

@@ -9,13 +9,13 @@ import { CateringProduct } from '@/lib/types';
 import { getDisplayPrice, getPricingTypeLabel } from '@/lib/pricing';
 import Card from '@/components/ui/Card';
 
-type Category = 'all' | 'breakfast' | 'lunch' | 'snack';
+type Category = 'all' | 'breakfast' | 'lunch' | 'dessert';
 
 const CATEGORIES: { id: Category; name: string; description: string }[] = [
   { id: 'all', name: 'All Products', description: 'Browse our complete menu' },
   { id: 'breakfast', name: 'Breakfast', description: 'Start your day right' },
   { id: 'lunch', name: 'Lunch & Dinner', description: 'Hearty meals for any occasion' },
-  { id: 'snack', name: 'Snacks & Desserts', description: 'Sweet treats and bites' },
+  { id: 'dessert', name: 'Desserts', description: 'Sweet treats and delicious endings' },
 ];
 
 function ProductCard({ product }: { product: CateringProduct }) {
@@ -92,7 +92,7 @@ export default function ProductsPage() {
   const groupedProducts = {
     breakfast: filteredProducts.filter((p) => p.categories.includes('breakfast')),
     lunch: filteredProducts.filter((p) => p.categories.includes('lunch') && !p.categories.includes('breakfast')),
-    snack: filteredProducts.filter((p) => p.categories.includes('snack') && !p.categories.includes('breakfast') && !p.categories.includes('lunch')),
+    dessert: filteredProducts.filter((p) => p.categories.includes('dessert') && !p.categories.includes('breakfast') && !p.categories.includes('lunch')),
   };
 
   return (
@@ -228,20 +228,20 @@ export default function ProductsPage() {
               </section>
             )}
 
-            {/* Snacks Section */}
-            {groupedProducts.snack.length > 0 && (
+            {/* Desserts Section */}
+            {groupedProducts.dessert.length > 0 && (
               <section>
                 <div className="flex items-center gap-4 mb-6">
                   <h2 className="font-oswald text-2xl sm:text-3xl font-bold text-[#363333]">
-                    Snacks & Desserts
+                    Desserts
                   </h2>
                   <div className="flex-1 h-px bg-[#dabb64]" />
                   <span className="text-sm text-gray-500">
-                    {groupedProducts.snack.length} items
+                    {groupedProducts.dessert.length} items
                   </span>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                  {groupedProducts.snack.map((product) => (
+                  {groupedProducts.dessert.map((product) => (
                     <ProductCard key={product.id} product={product} />
                   ))}
                 </div>

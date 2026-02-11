@@ -12,7 +12,7 @@ export default function HomePage() {
   const handleSelectEventType = (eventTypeId: string) => {
     dispatch({
       type: 'SET_EVENT_TYPE',
-      payload: eventTypeId as 'breakfast' | 'lunch' | 'snack',
+      payload: eventTypeId as 'breakfast' | 'lunch' | 'dessert',
     });
   };
 
@@ -81,7 +81,7 @@ export default function HomePage() {
               const eventImages: Record<string, string> = {
                 breakfast: '/images/Shrimp and Grits Shot High Res.png',
                 lunch: '/images/Stacked Sandwiches Hi Res Shot.png',
-                snack: '/images/BSB Chocolate Chip Cookies Hi Res Shot.png',
+                dessert: '/images/BSB Chocolate Chip Cookies Hi Res Shot.png',
               };
 
               return (
@@ -140,7 +140,7 @@ export default function HomePage() {
             LOOKING FOR SOMETHING ELSE?
           </h3>
           <p className="text-white/70 mb-6 max-w-xl mx-auto">
-            Browse our complete menu with over 90 items including breakfast, lunch, dinner, snacks, and beverages.
+            Browse our complete menu with over 90 items including breakfast, lunch, dinner, desserts, and beverages.
           </p>
           <Link
             href="/products"

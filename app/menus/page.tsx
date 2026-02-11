@@ -49,13 +49,6 @@ const MENU_SECTIONS = [
     subsections: [],
   },
   {
-    id: 'snacks',
-    title: 'SNACKS',
-    subtitle: 'Bites Between Meals',
-    image: '/images/Kind Bars and Granola Snacks Hi Res Shot.png',
-    subsections: [],
-  },
-  {
     id: 'beverages',
     title: 'BEVERAGES',
     subtitle: 'Drinks for Every Occasion',
@@ -135,9 +128,9 @@ function getProductsForSection(sectionId: string): CateringProduct[] {
   if (sectionId === 'desserts') {
     return CATERING_PRODUCTS.filter(p => p.tags?.includes('dessert'));
   }
-  if (sectionId === 'snacks') {
+  if (sectionId === 'desserts') {
     return CATERING_PRODUCTS.filter(p =>
-      p.categories.includes('snack') &&
+      p.categories.includes('dessert') &&
       !p.tags?.includes('dessert') &&
       !p.tags?.includes('beverage') &&
       !p.categories.includes('breakfast') &&

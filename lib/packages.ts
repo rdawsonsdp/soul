@@ -106,9 +106,9 @@ export const CATERING_PACKAGES: CateringPackage[] = [
     minHeadcount: 20,
   },
 
-  // Snack Packages
+  // Dessert Packages
   {
-    id: 'snack-essential',
+    id: 'dessert-essential',
     title: 'Afternoon Break',
     description: 'Light refreshments perfect for afternoon meetings or breaks.',
     pricePerPerson: 15,
@@ -120,11 +120,11 @@ export const CATERING_PACKAGES: CateringPackage[] = [
       'Bottled Water',
       'Coffee & Tea',
     ],
-    categories: ['snack'],
+    categories: ['dessert'],
     minHeadcount: 10,
   },
   {
-    id: 'snack-premium',
+    id: 'dessert-premium',
     title: 'Sweet Treats',
     description: 'Indulgent sweets and treats from our bakery.',
     pricePerPerson: 20,
@@ -136,11 +136,11 @@ export const CATERING_PACKAGES: CateringPackage[] = [
       'Coffee & Tea Service',
       'Lemonade',
     ],
-    categories: ['snack'],
+    categories: ['dessert'],
     minHeadcount: 10,
   },
   {
-    id: 'snack-deluxe',
+    id: 'dessert-deluxe',
     title: 'Celebration Spread',
     description: 'A full dessert and snack spread for celebrations and special occasions.',
     pricePerPerson: 28,
@@ -154,7 +154,7 @@ export const CATERING_PACKAGES: CateringPackage[] = [
       'Premium Coffee & Tea',
       'Sparkling Water & Sodas',
     ],
-    categories: ['snack'],
+    categories: ['dessert'],
     minHeadcount: 15,
   },
 ];
