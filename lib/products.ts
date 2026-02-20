@@ -54,7 +54,7 @@ export const CATERING_PRODUCTS: CateringProduct[] = [
     image: '/images/Yogurt Parfait Shot High Res.png',
     categories: ['breakfast'],
     pricing: trayPricing(98, 156, 260),
-    tags: ['healthy', 'interactive'],
+    tags: ['healthy', 'interactive', 'vegetarian'],
   },
   {
     id: 'fresh-fruit-tray',
@@ -63,7 +63,7 @@ export const CATERING_PRODUCTS: CateringProduct[] = [
     image: '/images/Fruit Salad Shot Hi Res.png',
     categories: ['breakfast', 'lunch', 'dessert'],
     pricing: trayPricing(98, 156, 260),
-    tags: ['healthy', 'vegan', 'fruit'],
+    tags: ['healthy', 'vegan', 'fruit', 'gluten-free', 'dairy-free', 'halal'],
   },
   {
     id: 'fresh-fruit-cups',
@@ -72,7 +72,7 @@ export const CATERING_PRODUCTS: CateringProduct[] = [
     image: '/images/Fruit Salad Shot Hi Res.png',
     categories: ['breakfast', 'lunch', 'dessert'],
     pricing: { type: 'per-each', priceEach: 7, minOrder: 10 },
-    tags: ['healthy', 'individual', 'vegan'],
+    tags: ['healthy', 'individual', 'vegan', 'gluten-free', 'dairy-free', 'halal'],
   },
   {
     id: 'whole-fruit',
@@ -81,7 +81,7 @@ export const CATERING_PRODUCTS: CateringProduct[] = [
     image: '/images/Fruit Salad Shot Hi Res.png',
     categories: ['breakfast', 'dessert'],
     pricing: { type: 'per-dozen', pricePerDozen: 24, servesPerDozen: 12 },
-    tags: ['healthy', 'vegan', 'grab-and-go'],
+    tags: ['healthy', 'vegan', 'grab-and-go', 'gluten-free', 'dairy-free', 'halal'],
   },
 
   // ==================== BREAKFAST - SOULFUL STARTS ====================
@@ -92,7 +92,7 @@ export const CATERING_PRODUCTS: CateringProduct[] = [
     image: '/images/Breakfast Casserole Bake Hi Res Shot.png',
     categories: ['breakfast'],
     pricing: trayPricing(59, 94, 156),
-    tags: ['classic', 'protein'],
+    tags: ['classic', 'protein', 'vegetarian', 'gluten-free', 'halal'],
   },
   {
     id: 'breakfast-casserole',
@@ -101,7 +101,7 @@ export const CATERING_PRODUCTS: CateringProduct[] = [
     image: '/images/Breakfast Casserole Bake Hi Res Shot.png',
     categories: ['breakfast'],
     pricing: trayPricing(88, 140, 234),
-    tags: ['hearty', 'protein', 'popular'],
+    tags: ['hearty', 'protein', 'popular', 'vegetarian', 'halal'],
   },
   {
     id: 'breakfast-potatoes',
@@ -128,7 +128,7 @@ export const CATERING_PRODUCTS: CateringProduct[] = [
     image: '/images/Breakfast Biscuits Shot High Res.png',
     categories: ['breakfast'],
     pricing: { type: 'per-dozen', pricePerDozen: 37, servesPerDozen: 12 },
-    tags: ['bread', 'southern'],
+    tags: ['bread', 'southern', 'vegetarian'],
   },
   {
     id: 'biscuits-gravy',
@@ -148,7 +148,7 @@ export const CATERING_PRODUCTS: CateringProduct[] = [
     image: '/images/Breakfast Meats II Hi Res Shot.png',
     categories: ['breakfast'],
     pricing: trayPricing(49, 78, 130),
-    tags: ['protein', 'turkey'],
+    tags: ['protein', 'turkey', 'gluten-free', 'dairy-free'],
   },
   {
     id: 'chicken-sausage-patties',
@@ -157,7 +157,7 @@ export const CATERING_PRODUCTS: CateringProduct[] = [
     image: '/images/Breakfast Meats II Hi Res Shot.png',
     categories: ['breakfast'],
     pricing: trayPricing(39, 62, 104),
-    tags: ['protein', 'chicken'],
+    tags: ['protein', 'chicken', 'gluten-free', 'dairy-free'],
   },
   {
     id: 'turkey-bacon',
@@ -166,7 +166,7 @@ export const CATERING_PRODUCTS: CateringProduct[] = [
     image: '/images/Breakfast Meats II Hi Res Shot_1.png',
     categories: ['breakfast'],
     pricing: trayPricing(39, 62, 104),
-    tags: ['protein', 'turkey'],
+    tags: ['protein', 'turkey', 'gluten-free', 'dairy-free'],
   },
   {
     id: 'pork-sausage',
@@ -175,7 +175,7 @@ export const CATERING_PRODUCTS: CateringProduct[] = [
     image: '/images/Breakfast Meats II Hi Res Shot.png',
     categories: ['breakfast'],
     pricing: trayPricing(39, 62, 104),
-    tags: ['protein', 'pork', 'classic'],
+    tags: ['protein', 'pork', 'classic', 'gluten-free', 'dairy-free'],
   },
   {
     id: 'pork-bacon',
@@ -184,7 +184,7 @@ export const CATERING_PRODUCTS: CateringProduct[] = [
     image: '/images/Breakfast Meats II Hi Res Shot_1.png',
     categories: ['breakfast'],
     pricing: trayPricing(39, 62, 104),
-    tags: ['protein', 'pork', 'classic'],
+    tags: ['protein', 'pork', 'classic', 'gluten-free', 'dairy-free'],
   },
 
   // ==================== BREAKFAST - SOUTHERN FAVORITES ====================
@@ -195,7 +195,7 @@ export const CATERING_PRODUCTS: CateringProduct[] = [
     image: '/images/Shrimp and Grits Shot High Res.png',
     categories: ['breakfast'],
     pricing: trayPricing(39, 62, 104),
-    tags: ['southern', 'comfort', 'vegetarian'],
+    tags: ['southern', 'comfort', 'vegetarian', 'gluten-free'],
   },
   {
     id: 'shrimp-grits',
@@ -204,7 +204,7 @@ export const CATERING_PRODUCTS: CateringProduct[] = [
     image: '/images/Shrimp and Grits Shot High Res.png',
     categories: ['breakfast'],
     pricing: trayPricing(68, 109, 182),
-    tags: ['southern', 'seafood', 'premium', 'popular'],
+    tags: ['southern', 'seafood', 'premium', 'popular', 'gluten-free'],
   },
   {
     id: 'catfish-grits',
@@ -213,7 +213,7 @@ export const CATERING_PRODUCTS: CateringProduct[] = [
     image: '/images/Shrimp and Grits Shot High Res.png',
     categories: ['breakfast'],
     pricing: trayPricing(88, 140, 234),
-    tags: ['southern', 'seafood', 'premium'],
+    tags: ['southern', 'seafood', 'premium', 'gluten-free'],
   },
 
   // ==================== BREAKFAST - HANDHELDS ====================
@@ -244,7 +244,7 @@ export const CATERING_PRODUCTS: CateringProduct[] = [
     image: '/images/Vegan Breakfast Wraps High Res Image.png',
     categories: ['breakfast'],
     pricing: trayPricing(68, 109, 182),
-    tags: ['vegan', 'plant-based', 'protein'],
+    tags: ['vegan', 'plant-based', 'protein', 'dairy-free'],
   },
   {
     id: 'vegan-sunrise-wrap',
@@ -253,7 +253,7 @@ export const CATERING_PRODUCTS: CateringProduct[] = [
     image: '/images/Vegan Breakfast Wraps High Res Image.png',
     categories: ['breakfast'],
     pricing: { type: 'per-dozen', pricePerDozen: 62, servesPerDozen: 12 },
-    tags: ['vegan', 'plant-based', 'handheld'],
+    tags: ['vegan', 'plant-based', 'handheld', 'dairy-free'],
   },
   {
     id: 'vegan-fruit-parfaits',
@@ -262,7 +262,7 @@ export const CATERING_PRODUCTS: CateringProduct[] = [
     image: '/images/Yogurt Parfait Shot High Res.png',
     categories: ['breakfast'],
     pricing: { type: 'per-each', priceEach: 5, minOrder: 10 },
-    tags: ['vegan', 'plant-based', 'healthy'],
+    tags: ['vegan', 'plant-based', 'healthy', 'dairy-free'],
   },
 
   // ==================== LUNCH - SALADS ====================
@@ -273,7 +273,7 @@ export const CATERING_PRODUCTS: CateringProduct[] = [
     image: '/images/Southwest Salad Shot Hi Res.png',
     categories: ['lunch'],
     pricing: trayPricing(68, 109, 182),
-    tags: ['salad', 'signature', 'popular'],
+    tags: ['salad', 'signature', 'popular', 'vegetarian', 'halal'],
   },
   {
     id: 'caesar-salad',
@@ -282,7 +282,7 @@ export const CATERING_PRODUCTS: CateringProduct[] = [
     image: '/images/Southwest Salad Shot Hi Res.png',
     categories: ['lunch'],
     pricing: trayPricing(59, 94, 156),
-    tags: ['salad', 'classic'],
+    tags: ['salad', 'classic', 'vegetarian', 'halal'],
   },
   {
     id: 'southwest-salad',
@@ -291,7 +291,7 @@ export const CATERING_PRODUCTS: CateringProduct[] = [
     image: '/images/Southwest Salad Shot Hi Res.png',
     categories: ['lunch'],
     pricing: trayPricing(68, 109, 182),
-    tags: ['salad', 'southwest'],
+    tags: ['salad', 'southwest', 'vegetarian', 'halal'],
   },
   {
     id: 'garden-salad',
@@ -300,7 +300,7 @@ export const CATERING_PRODUCTS: CateringProduct[] = [
     image: '/images/Southwest Salad Shot Hi Res.png',
     categories: ['lunch'],
     pricing: trayPricing(59, 94, 156),
-    tags: ['salad', 'classic', 'vegetarian'],
+    tags: ['salad', 'classic', 'vegetarian', 'halal'],
   },
 
   // ==================== LUNCH - PROTEIN ADD-ONS ====================
@@ -311,7 +311,7 @@ export const CATERING_PRODUCTS: CateringProduct[] = [
     image: '/images/Garlic Butter Chicken Breast Hi Res Image.png',
     categories: ['lunch'],
     pricing: trayPricing(29, 47, 78),
-    tags: ['protein', 'chicken', 'add-on'],
+    tags: ['protein', 'chicken', 'add-on', 'gluten-free', 'dairy-free', 'halal'],
   },
   {
     id: 'herb-salmon',
@@ -320,7 +320,7 @@ export const CATERING_PRODUCTS: CateringProduct[] = [
     image: '/images/Herb-Crusted Salmon with Garlic Butter Sauce Shot Hi Res.png',
     categories: ['lunch'],
     pricing: trayPricing(49, 78, 130),
-    tags: ['protein', 'seafood', 'premium', 'add-on'],
+    tags: ['protein', 'seafood', 'premium', 'add-on', 'gluten-free', 'dairy-free', 'halal'],
   },
   {
     id: 'grilled-flank-steak',
@@ -329,7 +329,7 @@ export const CATERING_PRODUCTS: CateringProduct[] = [
     image: '/images/Garlic Butter Chicken Breast Hi Res Image.png',
     categories: ['lunch'],
     pricing: trayPricing(43, 69, 114),
-    tags: ['protein', 'beef', 'premium', 'add-on'],
+    tags: ['protein', 'beef', 'premium', 'add-on', 'gluten-free', 'dairy-free', 'halal'],
   },
 
   // ==================== LUNCH - PACKAGES ====================
@@ -380,7 +380,7 @@ export const CATERING_PRODUCTS: CateringProduct[] = [
     image: '/images/Garlic Butter Chicken Breast Hi Res Image.png',
     categories: ['lunch'],
     pricing: panPricing(117, 187),
-    tags: ['entree', 'chicken', 'healthy'],
+    tags: ['entree', 'chicken', 'healthy', 'gluten-free', 'dairy-free', 'halal'],
   },
   {
     id: 'smothered-chicken',
@@ -389,7 +389,7 @@ export const CATERING_PRODUCTS: CateringProduct[] = [
     image: '/images/Garlic Butter Chicken Breast Hi Res Image.png',
     categories: ['lunch'],
     pricing: panPricing(117, 187),
-    tags: ['entree', 'chicken', 'southern', 'comfort'],
+    tags: ['entree', 'chicken', 'southern', 'comfort', 'gluten-free', 'halal'],
   },
   {
     id: 'jerk-chicken',
@@ -398,7 +398,7 @@ export const CATERING_PRODUCTS: CateringProduct[] = [
     image: '/images/Garlic Butter Chicken Breast Hi Res Image.png',
     categories: ['lunch'],
     pricing: panPricing(137, 187),
-    tags: ['entree', 'chicken', 'caribbean', 'spicy'],
+    tags: ['entree', 'chicken', 'caribbean', 'spicy', 'gluten-free', 'dairy-free', 'halal'],
   },
   {
     id: 'fried-chicken',
@@ -407,7 +407,7 @@ export const CATERING_PRODUCTS: CateringProduct[] = [
     image: '/images/Garlic Butter Chicken Breast Hi Res Image.png',
     categories: ['lunch'],
     pricing: panPricing(117, 187),
-    tags: ['entree', 'chicken', 'southern', 'popular'],
+    tags: ['entree', 'chicken', 'southern', 'popular', 'dairy-free'],
   },
   {
     id: 'fried-catfish',
@@ -416,7 +416,7 @@ export const CATERING_PRODUCTS: CateringProduct[] = [
     image: '/images/Herb-Crusted Salmon with Garlic Butter Sauce Shot Hi Res.png',
     categories: ['lunch'],
     pricing: panPricing(137, 187),
-    tags: ['entree', 'seafood', 'southern'],
+    tags: ['entree', 'seafood', 'southern', 'dairy-free', 'halal'],
   },
   {
     id: 'roasted-turkey',
@@ -425,7 +425,7 @@ export const CATERING_PRODUCTS: CateringProduct[] = [
     image: '/images/Garlic Butter Chicken Breast Hi Res Image.png',
     categories: ['lunch'],
     pricing: panPricing(137, 218),
-    tags: ['entree', 'turkey', 'classic'],
+    tags: ['entree', 'turkey', 'classic', 'gluten-free', 'dairy-free'],
   },
   {
     id: 'herb-crusted-salmon',
@@ -434,7 +434,7 @@ export const CATERING_PRODUCTS: CateringProduct[] = [
     image: '/images/Herb-Crusted Salmon with Garlic Butter Sauce Shot Hi Res.png',
     categories: ['lunch'],
     pricing: panPricing(137, 218),
-    tags: ['entree', 'seafood', 'premium'],
+    tags: ['entree', 'seafood', 'premium', 'gluten-free', 'dairy-free', 'halal'],
   },
 
   // ==================== LUNCH - SIDES (POTATOES) ====================
@@ -445,7 +445,7 @@ export const CATERING_PRODUCTS: CateringProduct[] = [
     image: '/images/Garlic Mashed Potatoes Shot Hi Res.png',
     categories: ['lunch'],
     pricing: panPricing(68, 109),
-    tags: ['side', 'potato', 'comfort'],
+    tags: ['side', 'potato', 'comfort', 'vegetarian', 'gluten-free', 'halal'],
   },
   {
     id: 'roasted-red-potatoes',
@@ -454,7 +454,7 @@ export const CATERING_PRODUCTS: CateringProduct[] = [
     image: '/images/Garlic Mashed Potatoes Shot Hi Res.png',
     categories: ['lunch'],
     pricing: panPricing(68, 109),
-    tags: ['side', 'potato', 'healthy'],
+    tags: ['side', 'potato', 'healthy', 'vegetarian', 'gluten-free', 'halal'],
   },
   {
     id: 'potato-wedges',
@@ -463,7 +463,7 @@ export const CATERING_PRODUCTS: CateringProduct[] = [
     image: '/images/Breakfast Potatoes Shot High Res.png',
     categories: ['lunch'],
     pricing: panPricing(68, 109),
-    tags: ['side', 'potato'],
+    tags: ['side', 'potato', 'vegetarian', 'halal'],
   },
 
   // ==================== LUNCH - SIDES (PASTA & GRAINS) ====================
@@ -474,7 +474,7 @@ export const CATERING_PRODUCTS: CateringProduct[] = [
     image: '/images/Macaroni and Cheese Shot Hi Res.png',
     categories: ['lunch'],
     pricing: panPricing(68, 109),
-    tags: ['side', 'pasta', 'comfort', 'popular'],
+    tags: ['side', 'pasta', 'comfort', 'popular', 'vegetarian', 'halal'],
   },
   {
     id: 'spaghetti-meat-sauce',
@@ -492,7 +492,7 @@ export const CATERING_PRODUCTS: CateringProduct[] = [
     image: '/images/Fettucine Alfredo with Grilled Chicken Shot Hi Res.png',
     categories: ['lunch'],
     pricing: panPricing(68, 109),
-    tags: ['side', 'pasta', 'creamy'],
+    tags: ['side', 'pasta', 'creamy', 'vegetarian'],
   },
   {
     id: 'rice-pilaf',
@@ -501,7 +501,7 @@ export const CATERING_PRODUCTS: CateringProduct[] = [
     image: '/images/Red Beans and Rice Hi Res Shot.png',
     categories: ['lunch'],
     pricing: panPricing(59, 94),
-    tags: ['side', 'grain', 'healthy'],
+    tags: ['side', 'grain', 'healthy', 'vegetarian', 'gluten-free', 'dairy-free', 'halal'],
   },
   {
     id: 'red-beans-rice',
@@ -510,7 +510,7 @@ export const CATERING_PRODUCTS: CateringProduct[] = [
     image: '/images/Red Beans and Rice Hi Res Shot.png',
     categories: ['lunch'],
     pricing: panPricing(59, 94),
-    tags: ['side', 'grain', 'southern', 'creole'],
+    tags: ['side', 'grain', 'southern', 'creole', 'gluten-free', 'dairy-free', 'halal'],
   },
 
   // ==================== LUNCH - SIDES (VEGETABLES) ====================
@@ -521,7 +521,7 @@ export const CATERING_PRODUCTS: CateringProduct[] = [
     image: '/images/Collard Greens with Smoked Turkey High End Shot.png',
     categories: ['lunch'],
     pricing: panPricing(68, 109),
-    tags: ['side', 'vegetable', 'southern'],
+    tags: ['side', 'vegetable', 'southern', 'vegetarian', 'gluten-free', 'dairy-free', 'halal'],
   },
   {
     id: 'collard-greens',
@@ -530,7 +530,7 @@ export const CATERING_PRODUCTS: CateringProduct[] = [
     image: '/images/Collard Greens with Smoked Turkey High End Shot.png',
     categories: ['lunch'],
     pricing: panPricing(68, 109),
-    tags: ['side', 'vegetable', 'southern', 'popular'],
+    tags: ['side', 'vegetable', 'southern', 'popular', 'vegetarian', 'gluten-free', 'dairy-free', 'halal'],
   },
   {
     id: 'southern-green-beans',
@@ -539,7 +539,7 @@ export const CATERING_PRODUCTS: CateringProduct[] = [
     image: '/images/Collard Greens with Smoked Turkey High End Shot.png',
     categories: ['lunch'],
     pricing: panPricing(68, 109),
-    tags: ['side', 'vegetable', 'southern'],
+    tags: ['side', 'vegetable', 'southern', 'vegetarian', 'gluten-free', 'dairy-free', 'halal'],
   },
   {
     id: 'vegetable-medley',
@@ -548,7 +548,7 @@ export const CATERING_PRODUCTS: CateringProduct[] = [
     image: '/images/Collard Greens with Smoked Turkey High End Shot.png',
     categories: ['lunch'],
     pricing: panPricing(49, 78),
-    tags: ['side', 'vegetable', 'healthy'],
+    tags: ['side', 'vegetable', 'healthy', 'vegetarian', 'gluten-free', 'dairy-free', 'halal'],
   },
   {
     id: 'roasted-asparagus',
@@ -557,7 +557,7 @@ export const CATERING_PRODUCTS: CateringProduct[] = [
     image: '/images/Collard Greens with Smoked Turkey High End Shot.png',
     categories: ['lunch'],
     pricing: panPricing(68, 109),
-    tags: ['side', 'vegetable', 'premium'],
+    tags: ['side', 'vegetable', 'premium', 'vegetarian', 'gluten-free', 'dairy-free', 'halal'],
   },
   {
     id: 'sweet-potatoes',
@@ -566,7 +566,7 @@ export const CATERING_PRODUCTS: CateringProduct[] = [
     image: '/images/Southern Breakfast Potatoes High Res Shot.png',
     categories: ['lunch'],
     pricing: panPricing(68, 109),
-    tags: ['side', 'vegetable', 'southern', 'sweet'],
+    tags: ['side', 'vegetable', 'southern', 'sweet', 'vegetarian', 'gluten-free', 'halal'],
   },
   {
     id: 'creamed-corn',
@@ -575,7 +575,7 @@ export const CATERING_PRODUCTS: CateringProduct[] = [
     image: '/images/Collard Greens with Smoked Turkey High End Shot.png',
     categories: ['lunch'],
     pricing: panPricing(59, 94),
-    tags: ['side', 'vegetable', 'comfort'],
+    tags: ['side', 'vegetable', 'comfort', 'vegetarian', 'gluten-free', 'halal'],
   },
 
   // ==================== LUNCH - SIDES (BREADS) ====================
@@ -586,7 +586,7 @@ export const CATERING_PRODUCTS: CateringProduct[] = [
     image: '/images/Breakfast Biscuits Shot High Res.png',
     categories: ['lunch'],
     pricing: { type: 'per-dozen', pricePerDozen: 31, servesPerDozen: 12 },
-    tags: ['side', 'bread'],
+    tags: ['side', 'bread', 'vegetarian'],
   },
   {
     id: 'cornbread',
@@ -595,7 +595,7 @@ export const CATERING_PRODUCTS: CateringProduct[] = [
     image: '/images/Breakfast Biscuits Shot High Res.png',
     categories: ['lunch'],
     pricing: { type: 'per-dozen', pricePerDozen: 38, servesPerDozen: 12 },
-    tags: ['side', 'bread', 'southern'],
+    tags: ['side', 'bread', 'southern', 'vegetarian'],
   },
   {
     id: 'garlic-knots',
@@ -604,7 +604,7 @@ export const CATERING_PRODUCTS: CateringProduct[] = [
     image: '/images/Breakfast Biscuits Shot High Res.png',
     categories: ['lunch'],
     pricing: { type: 'per-dozen', pricePerDozen: 38, servesPerDozen: 12 },
-    tags: ['side', 'bread'],
+    tags: ['side', 'bread', 'vegetarian'],
   },
 
   // ==================== LUNCH - SIDES (COLD) ====================
@@ -615,7 +615,7 @@ export const CATERING_PRODUCTS: CateringProduct[] = [
     image: '/images/Southwest Salad Shot Hi Res.png',
     categories: ['lunch'],
     pricing: panPricing(68, 109),
-    tags: ['side', 'cold', 'classic'],
+    tags: ['side', 'cold', 'classic', 'vegetarian', 'gluten-free'],
   },
   {
     id: 'potato-salad',
@@ -624,7 +624,7 @@ export const CATERING_PRODUCTS: CateringProduct[] = [
     image: '/images/Garlic Mashed Potatoes Shot Hi Res.png',
     categories: ['lunch'],
     pricing: panPricing(68, 109),
-    tags: ['side', 'cold', 'southern'],
+    tags: ['side', 'cold', 'southern', 'vegetarian', 'gluten-free'],
   },
   {
     id: 'cold-pasta-salad',
@@ -633,7 +633,7 @@ export const CATERING_PRODUCTS: CateringProduct[] = [
     image: '/images/Fettucine Alfredo with Grilled Chicken Shot Hi Res.png',
     categories: ['lunch'],
     pricing: panPricing(68, 109),
-    tags: ['side', 'cold', 'pasta'],
+    tags: ['side', 'cold', 'pasta', 'vegetarian'],
   },
   {
     id: 'pesto-pasta-salad',
@@ -642,7 +642,7 @@ export const CATERING_PRODUCTS: CateringProduct[] = [
     image: '/images/Fettucine Alfredo with Grilled Chicken Shot Hi Res.png',
     categories: ['lunch'],
     pricing: panPricing(88, 140),
-    tags: ['side', 'cold', 'pasta', 'premium'],
+    tags: ['side', 'cold', 'pasta', 'premium', 'vegetarian'],
   },
 
   // ==================== DESSERTS ====================
@@ -653,7 +653,7 @@ export const CATERING_PRODUCTS: CateringProduct[] = [
     image: '/images/BSB Caramel Cake Slices Hi Res Shot.png',
     categories: ['breakfast', 'lunch', 'dessert'],
     pricing: { type: 'per-each', priceEach: 9, minOrder: 10 },
-    tags: ['dessert', 'bakery', 'popular'],
+    tags: ['dessert', 'bakery', 'popular', 'vegetarian'],
   },
   {
     id: 'red-velvet-cake',
@@ -662,7 +662,7 @@ export const CATERING_PRODUCTS: CateringProduct[] = [
     image: '/images/BSB Red Velvet Cake.png',
     categories: ['breakfast', 'lunch', 'dessert'],
     pricing: { type: 'per-each', priceEach: 9, minOrder: 10 },
-    tags: ['dessert', 'bakery', 'popular'],
+    tags: ['dessert', 'bakery', 'popular', 'vegetarian'],
   },
   {
     id: 'cheesecake-slices',
@@ -671,7 +671,7 @@ export const CATERING_PRODUCTS: CateringProduct[] = [
     image: '/images/BSB Strawberry Cheesecake Slice Hi Res Shot.png',
     categories: ['breakfast', 'lunch', 'dessert'],
     pricing: { type: 'per-each', priceEach: 12, minOrder: 10 },
-    tags: ['dessert', 'bakery', 'premium'],
+    tags: ['dessert', 'bakery', 'premium', 'vegetarian'],
   },
   {
     id: 'strawberry-cheesecake',
@@ -680,7 +680,7 @@ export const CATERING_PRODUCTS: CateringProduct[] = [
     image: '/images/BSB Strawberry Cheesecake.png',
     categories: ['breakfast', 'lunch', 'dessert'],
     pricing: { type: 'per-each', priceEach: 12, minOrder: 10 },
-    tags: ['dessert', 'bakery', 'premium'],
+    tags: ['dessert', 'bakery', 'premium', 'vegetarian'],
   },
   {
     id: 'cookies',
@@ -689,7 +689,7 @@ export const CATERING_PRODUCTS: CateringProduct[] = [
     image: '/images/BSB Chocolate Chip Cookies Hi Res Shot.png',
     categories: ['breakfast', 'lunch', 'dessert'],
     pricing: { type: 'per-dozen', pricePerDozen: 30, servesPerDozen: 12 },
-    tags: ['dessert', 'bakery', 'popular'],
+    tags: ['dessert', 'bakery', 'popular', 'vegetarian'],
   },
 
   // ==================== SNACKS ====================
@@ -765,7 +765,7 @@ export const CATERING_PRODUCTS: CateringProduct[] = [
     image: '/images/Cold Brew Hi Res Shot.png',
     categories: ['breakfast', 'lunch'],
     pricing: { type: 'per-each', priceEach: 3, minOrder: 10 },
-    tags: ['beverage', 'cold', 'coffee'],
+    tags: ['beverage', 'cold', 'coffee', 'dairy-free'],
   },
   {
     id: 'bottled-juices',
@@ -774,7 +774,7 @@ export const CATERING_PRODUCTS: CateringProduct[] = [
     image: '/images/San Pellegrino Drinks Hi Res Shot.png',
     categories: ['breakfast', 'lunch'],
     pricing: { type: 'per-each', priceEach: 3, minOrder: 10 },
-    tags: ['beverage', 'cold', 'juice'],
+    tags: ['beverage', 'cold', 'juice', 'dairy-free'],
   },
   {
     id: 'coconut-water',
@@ -783,7 +783,7 @@ export const CATERING_PRODUCTS: CateringProduct[] = [
     image: '/images/San Pellegrino Drinks Hi Res Shot.png',
     categories: ['breakfast'],
     pricing: { type: 'per-each', priceEach: 3, minOrder: 10 },
-    tags: ['beverage', 'cold', 'healthy', 'vegan'],
+    tags: ['beverage', 'cold', 'healthy', 'vegan', 'dairy-free'],
   },
   {
     id: 'bottled-water',
@@ -792,7 +792,7 @@ export const CATERING_PRODUCTS: CateringProduct[] = [
     image: '/images/San Pellegrino Drinks Hi Res Shot.png',
     categories: ['breakfast', 'lunch'],
     pricing: { type: 'per-each', priceEach: 2, minOrder: 10 },
-    tags: ['beverage', 'cold', 'water'],
+    tags: ['beverage', 'cold', 'water', 'dairy-free'],
   },
 
   // ==================== BEVERAGES - LUNCH ====================
@@ -803,7 +803,7 @@ export const CATERING_PRODUCTS: CateringProduct[] = [
     image: '/images/Soda Hi Res Image Shot.png',
     categories: ['lunch'],
     pricing: { type: 'per-each', priceEach: 2, minOrder: 10 },
-    tags: ['beverage', 'cold', 'soda'],
+    tags: ['beverage', 'cold', 'soda', 'dairy-free'],
   },
   {
     id: 'sparkling-water',
@@ -812,7 +812,7 @@ export const CATERING_PRODUCTS: CateringProduct[] = [
     image: '/images/San Pellegrino Drinks Hi Res Shot.png',
     categories: ['lunch'],
     pricing: { type: 'per-each', priceEach: 2, minOrder: 10 },
-    tags: ['beverage', 'cold', 'sparkling'],
+    tags: ['beverage', 'cold', 'sparkling', 'dairy-free'],
   },
   {
     id: 'iced-tea',
@@ -821,7 +821,7 @@ export const CATERING_PRODUCTS: CateringProduct[] = [
     image: '/images/San Pellegrino Drinks Hi Res Shot.png',
     categories: ['lunch'],
     pricing: { type: 'per-each', priceEach: 2, minOrder: 10 },
-    tags: ['beverage', 'cold', 'tea'],
+    tags: ['beverage', 'cold', 'tea', 'dairy-free'],
   },
   {
     id: 'celsius-energy',
@@ -830,7 +830,7 @@ export const CATERING_PRODUCTS: CateringProduct[] = [
     image: '/images/San Pellegrino Drinks Hi Res Shot.png',
     categories: ['lunch'],
     pricing: { type: 'per-each', priceEach: 3, minOrder: 10 },
-    tags: ['beverage', 'cold', 'energy'],
+    tags: ['beverage', 'cold', 'energy', 'dairy-free'],
   },
   {
     id: 'red-bull',
@@ -839,7 +839,7 @@ export const CATERING_PRODUCTS: CateringProduct[] = [
     image: '/images/San Pellegrino Drinks Hi Res Shot.png',
     categories: ['lunch'],
     pricing: { type: 'per-each', priceEach: 3, minOrder: 10 },
-    tags: ['beverage', 'cold', 'energy'],
+    tags: ['beverage', 'cold', 'energy', 'dairy-free'],
   },
 ];
 
@@ -852,4 +852,78 @@ export function getProductsByEventType(eventType: string | null): CateringProduc
 // Get product by ID
 export function getProductById(id: string): CateringProduct | undefined {
   return CATERING_PRODUCTS.find(product => product.id === id);
+}
+
+// Get recommended products based on event type, budget, and what's already in the cart
+export function getRecommendedProducts(
+  eventType: string | null,
+  cartItemIds: string[],
+  budgetRange?: { min: number; max: number } | null,
+  limit: number = 6,
+): CateringProduct[] {
+  let candidates = CATERING_PRODUCTS.filter(p => !cartItemIds.includes(p.id));
+
+  // Filter by event type if set
+  if (eventType) {
+    candidates = candidates.filter(p => p.categories.includes(eventType as any));
+  }
+
+  // Exclude packages, interactive bars, and beverages for recommendations
+  candidates = candidates.filter(p =>
+    !p.tags?.includes('package') &&
+    !p.tags?.includes('interactive') &&
+    !p.tags?.includes('beverage')
+  );
+
+  // Prioritize popular items
+  candidates.sort((a, b) => {
+    const aPopular = a.tags?.includes('popular') ? 1 : 0;
+    const bPopular = b.tags?.includes('popular') ? 1 : 0;
+    return bPopular - aPopular;
+  });
+
+  return candidates.slice(0, limit);
+}
+
+// Build a suggested menu for a given event type and headcount
+export function getSuggestedMenu(
+  eventType: string | null,
+  headcount: number,
+  budgetRange?: { min: number; max: number } | null,
+): CateringProduct[] {
+  const category = eventType || 'lunch';
+  const available = CATERING_PRODUCTS.filter(p =>
+    p.categories.includes(category as any) &&
+    !p.tags?.includes('package') &&
+    !p.tags?.includes('interactive')
+  );
+
+  const pick = (tags: string[], count: number): CateringProduct[] => {
+    const matches = available.filter(p => tags.some(t => p.tags?.includes(t)));
+    return matches.slice(0, count);
+  };
+
+  const menu: CateringProduct[] = [];
+
+  if (category === 'breakfast') {
+    menu.push(...pick(['entree', 'classic'], 1));
+    menu.push(...pick(['protein'], 1));
+    menu.push(...pick(['side'], 1));
+    menu.push(...pick(['beverage'], 1));
+  } else if (category === 'lunch') {
+    menu.push(...pick(['entree'], 1));
+    menu.push(...pick(['side'], 2));
+    menu.push(...pick(['beverage'], 1));
+  } else {
+    menu.push(...pick(['dessert', 'bakery'], 2));
+    menu.push(...pick(['beverage'], 1));
+  }
+
+  // Deduplicate
+  const seen = new Set<string>();
+  return menu.filter(p => {
+    if (seen.has(p.id)) return false;
+    seen.add(p.id);
+    return true;
+  });
 }

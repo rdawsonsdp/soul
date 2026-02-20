@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { CATERING_PRODUCTS } from '@/lib/products';
 import { CateringProduct } from '@/lib/types';
 import { getDisplayPrice, getPricingTypeLabel } from '@/lib/pricing';
+import DietaryFilterBar from '@/components/catering/DietaryFilterBar';
 
 // Menu sections organized by the PDF structure
 const MENU_SECTIONS = [
@@ -124,6 +125,11 @@ function getProductsForSubsection(subsectionId: string): CateringProduct[] {
   return CATERING_PRODUCTS.filter(filter);
 }
 
+function filterByDietary(products: CateringProduct[], filters: string[]): CateringProduct[] {
+  if (filters.length === 0) return products;
+  return products.filter(p => filters.every(f => p.tags?.includes(f)));
+}
+
 function getProductsForSection(sectionId: string): CateringProduct[] {
   if (sectionId === 'desserts') {
     return CATERING_PRODUCTS.filter(p => p.tags?.includes('dessert'));
@@ -173,6 +179,15 @@ function MenuItemCard({ product }: { product: CateringProduct }) {
 
 export default function MenusPage() {
   const [activeSection, setActiveSection] = useState<string | null>('breakfast');
+  const [activeFilters, setActiveFilters] = useState<string[]>([]);
+
+  const handleToggleFilter = (tag: string) => {
+    setActiveFilters(prev =>
+      prev.includes(tag)
+        ? prev.filter(f => f !== tag)
+        : [...prev, tag]
+    );
+  };
 
   // Update active section based on scroll position
   useEffect(() => {
@@ -247,6 +262,10 @@ export default function MenusPage() {
               </button>
             ))}
           </div>
+          {/* Dietary Filters */}
+          <div className="pb-3">
+            <DietaryFilterBar activeTags={activeFilters} onToggleTag={handleToggleFilter} />
+          </div>
         </div>
       </div>
 
@@ -283,7 +302,7 @@ export default function MenusPage() {
             {section.subsections.length > 0 ? (
               <div className="space-y-12">
                 {section.subsections.map((subsection) => {
-                  const products = getProductsForSubsection(subsection.id);
+                  const products = filterByDietary(getProductsForSubsection(subsection.id), activeFilters);
                   if (products.length === 0) return null;
 
                   return (
@@ -309,7 +328,7 @@ export default function MenusPage() {
             ) : (
               /* Direct products for sections without subsections */
               <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
-                {getProductsForSection(section.id).map((product) => (
+                {filterByDietary(getProductsForSection(section.id), activeFilters).map((product) => (
                   <MenuItemCard key={product.id} product={product} />
                 ))}
               </div>

@@ -79,9 +79,31 @@ export default function CateringProductCard({ product }: CateringProductCardProp
         </div>
 
         {/* Product Info */}
-        <h3 className="font-oswald font-semibold text-[#363333] mb-2 text-sm sm:text-base line-clamp-2 tracking-wide">
+        <h3 className="font-oswald font-semibold text-[#363333] mb-1 text-sm sm:text-base line-clamp-2 tracking-wide">
           {product.title}
         </h3>
+
+        {/* Dietary Badges */}
+        {product.tags && product.tags.length > 0 && (
+          <div className="flex flex-wrap gap-1 mb-2">
+            {product.tags.includes('vegan') && (
+              <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-green-100 text-green-700 font-semibold">Vegan</span>
+            )}
+            {product.tags.includes('vegetarian') && !product.tags.includes('vegan') && (
+              <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-green-50 text-green-600 font-semibold">Vegetarian</span>
+            )}
+            {product.tags.includes('gluten-free') && (
+              <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-amber-50 text-amber-700 font-semibold">GF</span>
+            )}
+            {product.tags.includes('dairy-free') && (
+              <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-blue-50 text-blue-600 font-semibold">DF</span>
+            )}
+            {product.tags.includes('halal') && (
+              <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-purple-50 text-purple-600 font-semibold">Halal</span>
+            )}
+          </div>
+        )}
+
         <p className="text-xs sm:text-sm text-gray-600 mb-3 flex-grow line-clamp-2">
           {product.description}
         </p>

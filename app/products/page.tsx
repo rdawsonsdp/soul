@@ -8,6 +8,7 @@ import { CATERING_PRODUCTS } from '@/lib/products';
 import { CateringProduct } from '@/lib/types';
 import { getDisplayPrice, getPricingTypeLabel } from '@/lib/pricing';
 import Card from '@/components/ui/Card';
+import DietaryFilterBar from '@/components/catering/DietaryFilterBar';
 
 type Category = 'all' | 'breakfast' | 'lunch' | 'dessert';
 
@@ -74,9 +75,18 @@ function ProductCard({ product }: { product: CateringProduct }) {
 export default function ProductsPage() {
   const [activeCategory, setActiveCategory] = useState<Category>('all');
   const [searchQuery, setSearchQuery] = useState('');
+  const [activeFilters, setActiveFilters] = useState<string[]>([]);
   const { state } = useCatering();
 
-  // Filter products by category and search
+  const handleToggleFilter = (tag: string) => {
+    setActiveFilters(prev =>
+      prev.includes(tag)
+        ? prev.filter(f => f !== tag)
+        : [...prev, tag]
+    );
+  };
+
+  // Filter products by category, search, and dietary filters
   const filteredProducts = CATERING_PRODUCTS.filter((product) => {
     const matchesCategory =
       activeCategory === 'all' || product.categories.includes(activeCategory as any);
@@ -85,7 +95,9 @@ export default function ProductsPage() {
       product.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       product.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
       product.tags?.some((tag) => tag.toLowerCase().includes(searchQuery.toLowerCase()));
-    return matchesCategory && matchesSearch;
+    const matchesDietary = activeFilters.length === 0 ||
+      activeFilters.every(f => product.tags?.includes(f));
+    return matchesCategory && matchesSearch && matchesDietary;
   });
 
   // Group products by their primary category for "all" view
@@ -162,6 +174,11 @@ export default function ProductsPage() {
                 </button>
               ))}
             </div>
+          </div>
+
+          {/* Dietary Filters */}
+          <div className="mt-3">
+            <DietaryFilterBar activeTags={activeFilters} onToggleTag={handleToggleFilter} />
           </div>
         </div>
       </div>
