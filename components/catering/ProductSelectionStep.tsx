@@ -1,21 +1,39 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { useCatering } from '@/context/CateringContext';
 import { getEventTypeName } from '@/lib/event-types';
-import { formatCurrency, getDisplayPrice, getPricingTypeLabel } from '@/lib/pricing';
+import { formatCurrency } from '@/lib/pricing';
 import { getProductsByEventType } from '@/lib/products';
+import { getBudgetStatus } from '@/lib/budgets';
 import CateringProductCard from './CateringProductCard';
 import CateringCart from './CateringCart';
 import Card from '@/components/ui/Card';
 import Badge from '@/components/ui/Badge';
 
-export default function ProductSelectionStep() {
+interface ProductSelectionStepProps {
+  activeFilters?: string[];
+  onToggleFilter?: (tag: string) => void;
+  filterBar?: React.ReactNode;
+  recommendedSection?: React.ReactNode;
+}
+
+export default function ProductSelectionStep({
+  activeFilters = [],
+  onToggleFilter,
+  filterBar,
+  recommendedSection,
+}: ProductSelectionStepProps) {
   const router = useRouter();
   const { state, dispatch, perPersonCost, totalCost } = useCatering();
   const [searchTerm, setSearchTerm] = useState('');
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const sectionRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    sectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, []);
 
   // Calculate delivery and total for mobile cart button
   const getDeliveryFee = (headcount: number): number => {
@@ -25,6 +43,11 @@ export default function ProductSelectionStep() {
   };
   const deliveryFee = getDeliveryFee(state.headcount);
   const orderTotal = totalCost + (state.selectedItems.length > 0 ? deliveryFee : 0);
+
+  // Budget status
+  const budgetStatus = getBudgetStatus(perPersonCost, state.budgetRange, state.customBudget);
+  const budgetColor = budgetStatus === 'on-track' ? 'text-green-600' : budgetStatus === 'under' ? 'text-yellow-600' : 'text-red-600';
+  const budgetBg = budgetStatus === 'on-track' ? 'bg-green-50 border-green-200' : budgetStatus === 'under' ? 'bg-yellow-50 border-yellow-200' : 'bg-red-50 border-red-200';
 
   // Close cart when pressing Escape
   useEffect(() => {
@@ -50,15 +73,23 @@ export default function ProductSelectionStep() {
   // Get products filtered by event type from local data
   const products = getProductsByEventType(state.eventType);
 
-  // Filter products based on search term
+  // Filter products based on search term and dietary filters
   const filteredProducts = products.filter((product) => {
-    if (!searchTerm) return true;
-    const term = searchTerm.toLowerCase();
-    return (
-      product.title.toLowerCase().includes(term) ||
-      product.description.toLowerCase().includes(term) ||
-      product.tags?.some(tag => tag.toLowerCase().includes(term))
-    );
+    // Search filter
+    if (searchTerm) {
+      const term = searchTerm.toLowerCase();
+      const matchesSearch =
+        product.title.toLowerCase().includes(term) ||
+        product.description.toLowerCase().includes(term) ||
+        product.tags?.some(tag => tag.toLowerCase().includes(term));
+      if (!matchesSearch) return false;
+    }
+    // Dietary filters (must match ALL active filters)
+    if (activeFilters.length > 0) {
+      const matchesFilters = activeFilters.every(f => product.tags?.includes(f));
+      if (!matchesFilters) return false;
+    }
+    return true;
   });
 
   // Sort by pricing type to group similar items
@@ -74,18 +105,14 @@ export default function ProductSelectionStep() {
   };
 
   const handleBack = () => {
-    dispatch({ type: 'GO_BACK' });
-  };
-
-  const handleHeadcountChange = (value: number) => {
-    dispatch({ type: 'SET_HEADCOUNT', payload: Math.max(1, value) });
+    dispatch({ type: 'SET_STEP', payload: 3 });
   };
 
   return (
-    <div className="bg-white py-12 sm:py-16">
+    <div ref={sectionRef} className="bg-white py-12 sm:py-16 scroll-mt-4">
       <div className="container mx-auto px-4">
         {/* Header */}
-        <div className="text-center mb-10">
+        <div className="text-center mb-6">
           <div className="flex flex-wrap items-center justify-center gap-2 mb-4">
             {state.eventType && (
               <Badge variant={state.eventType as 'breakfast' | 'lunch' | 'dessert'}>
@@ -102,48 +129,57 @@ export default function ProductSelectionStep() {
             BUILD YOUR {state.eventType?.toUpperCase() || 'EVENT'}
           </h2>
           <p className="text-gray-600 text-base sm:text-lg max-w-2xl mx-auto mb-6">
-            Select items for your {state.eventType || ''} - sizes auto-adjust to your guest count
+            Select items for your {state.eventType || ''} - sizes auto-adjust to your {state.headcount} guest count
           </p>
-
-          {/* Headcount Input */}
-          <div className="flex items-center justify-center gap-4 mb-8">
-            <label className="font-oswald text-lg text-[#363333]">
-              GUESTS:
-            </label>
-            <div className="flex items-center gap-2">
-              <button
-                onClick={() => handleHeadcountChange(state.headcount - 5)}
-                className="w-10 h-10 rounded-full bg-[#f7efd7] hover:bg-[#dabb64] text-[#363333] font-bold transition-colors"
-              >
-                -
-              </button>
-              <input
-                type="number"
-                value={state.headcount}
-                onChange={(e) => handleHeadcountChange(parseInt(e.target.value) || 10)}
-                className="w-20 h-10 text-center text-xl font-bold border-2 border-[#363333] rounded-lg"
-                min="1"
-              />
-              <button
-                onClick={() => handleHeadcountChange(state.headcount + 5)}
-                className="w-10 h-10 rounded-full bg-[#f7efd7] hover:bg-[#dabb64] text-[#363333] font-bold transition-colors"
-              >
-                +
-              </button>
-            </div>
-          </div>
-
-          {/* Search */}
-          <div className="max-w-md mx-auto">
-            <input
-              type="text"
-              placeholder="Search menu items..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-[#dabb64] focus:outline-none"
-            />
-          </div>
         </div>
+
+        {/* Per-Person Cost Bar */}
+        {state.selectedItems.length > 0 && (
+          <div className={`sticky top-0 z-30 mb-6 p-4 rounded-xl border-2 ${budgetBg} flex flex-wrap items-center justify-between gap-4`}>
+            <div className="flex items-center gap-4">
+              <div>
+                <span className="text-xs text-gray-500 uppercase tracking-wide block">Per Person</span>
+                <span className="font-oswald text-2xl sm:text-3xl font-bold text-[#363333]">
+                  {formatCurrency(orderTotal / state.headcount)}
+                </span>
+              </div>
+              <div className="h-10 w-px bg-gray-300 hidden sm:block" />
+              <div className="hidden sm:block">
+                <span className="text-xs text-gray-500 uppercase tracking-wide block">
+                  {state.headcount} guests
+                </span>
+                <span className="font-oswald text-xl font-bold text-[#dabb64]">
+                  {formatCurrency(orderTotal)} total
+                </span>
+              </div>
+            </div>
+            {state.budgetRange && (
+              <div className={`text-sm font-semibold ${budgetColor}`}>
+                {budgetStatus === 'on-track' && 'Within budget range'}
+                {budgetStatus === 'under' && 'Below budget range'}
+                {budgetStatus === 'over' && 'Over budget range'}
+                <span className="text-xs text-gray-500 ml-1">({state.budgetRange.label})</span>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* Search */}
+        <div className="max-w-md mx-auto mb-4">
+          <input
+            type="text"
+            placeholder="Search menu items..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-[#dabb64] focus:outline-none"
+          />
+        </div>
+
+        {/* Dietary Filter Bar (injected from parent) */}
+        {filterBar && <div className="mb-6">{filterBar}</div>}
+
+        {/* Recommended Items (injected from parent) */}
+        {recommendedSection && <div className="mb-8">{recommendedSection}</div>}
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
           {/* Product Grid */}
@@ -151,10 +187,21 @@ export default function ProductSelectionStep() {
             {sortedProducts.length === 0 ? (
               <Card className="text-center py-12">
                 <p className="text-gray-500">
-                  {searchTerm
-                    ? 'No products match your search.'
+                  {searchTerm || activeFilters.length > 0
+                    ? 'No products match your filters.'
                     : 'No products available for this event type.'}
                 </p>
+                {(searchTerm || activeFilters.length > 0) && (
+                  <button
+                    onClick={() => {
+                      setSearchTerm('');
+                      if (onToggleFilter) activeFilters.forEach(f => onToggleFilter(f));
+                    }}
+                    className="mt-3 text-[#dabb64] hover:underline text-sm"
+                  >
+                    Clear filters
+                  </button>
+                )}
               </Card>
             ) : (
               <div className="grid grid-cols-2 sm:grid-cols-2 xl:grid-cols-3 gap-3 sm:gap-6">
@@ -243,7 +290,7 @@ export default function ProductSelectionStep() {
             onClick={handleBack}
             className="font-oswald text-gray-500 hover:text-[#363333] transition-colors tracking-wide"
           >
-            ← BACK TO EVENT TYPE
+            ← BACK TO ORDER TYPE
           </button>
         </div>
       </div>

@@ -1,18 +1,19 @@
 'use client';
 
 interface StepIndicatorProps {
-  currentStep: 1 | 2 | 3;
+  currentStep: 1 | 2 | 3 | 4;
   totalSteps?: number;
 }
 
 export default function StepIndicator({
   currentStep,
-  totalSteps = 3,
+  totalSteps = 4,
 }: StepIndicatorProps) {
   const steps = [
     { number: 1, label: 'Event Type' },
-    { number: 2, label: 'Budget' },
-    { number: 3, label: 'Build Order' },
+    { number: 2, label: 'Guests & Budget' },
+    { number: 3, label: 'Order Type' },
+    { number: 4, label: 'Build Order' },
   ];
 
   return (
@@ -27,10 +28,10 @@ export default function StepIndicator({
                 font-bold text-sm sm:text-base transition-all duration-300
                 ${
                   currentStep > step.number
-                    ? 'bg-success-green text-white'
+                    ? 'bg-green-500 text-white'
                     : currentStep === step.number
-                    ? 'bg-primary-brown text-white ring-4 ring-primary-brown/20'
-                    : 'bg-light-brown/20 text-light-brown'
+                    ? 'bg-[#363333] text-white ring-4 ring-[#363333]/20'
+                    : 'bg-gray-200 text-gray-400'
                 }
               `}
             >
@@ -57,8 +58,8 @@ export default function StepIndicator({
                 mt-2 text-xs sm:text-sm font-medium hidden sm:block
                 ${
                   currentStep >= step.number
-                    ? 'text-primary-brown'
-                    : 'text-light-brown'
+                    ? 'text-[#363333]'
+                    : 'text-gray-400'
                 }
               `}
             >
@@ -70,11 +71,11 @@ export default function StepIndicator({
           {index < steps.length - 1 && (
             <div
               className={`
-                w-12 sm:w-20 h-1 mx-2 sm:mx-4 rounded-full transition-all duration-300
+                w-8 sm:w-16 h-1 mx-1 sm:mx-3 rounded-full transition-all duration-300
                 ${
                   currentStep > step.number
-                    ? 'bg-success-green'
-                    : 'bg-light-brown/20'
+                    ? 'bg-green-500'
+                    : 'bg-gray-200'
                 }
               `}
             />

@@ -142,7 +142,7 @@ export interface SelectedPackage {
 
 // Main application state
 export interface CateringState {
-  currentStep: 1 | 2;
+  currentStep: 1 | 2 | 3 | 4;
   eventType: EventType | null;
   budgetRange: BudgetRange | null;
   customBudget: number | null;
@@ -166,7 +166,7 @@ export type CateringAction =
   | { type: 'CLEAR_ITEMS' }
   | { type: 'SELECT_PACKAGE'; payload: CateringPackage }
   | { type: 'CLEAR_PACKAGE' }
-  | { type: 'SET_STEP'; payload: 1 | 2 }
+  | { type: 'SET_STEP'; payload: 1 | 2 | 3 | 4 }
   | { type: 'GO_BACK' }
   | { type: 'SET_BUYER_INFO'; payload: BuyerInfo }
   | { type: 'HYDRATE'; payload: CateringState }

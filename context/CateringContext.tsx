@@ -65,7 +65,6 @@ function cateringReducer(state: CateringState, action: CateringAction): Catering
       return {
         ...state,
         eventType: action.payload,
-        orderType: 'build-your-own', // Default to build your own
         currentStep: 2,
       };
     }
@@ -89,6 +88,7 @@ function cateringReducer(state: CateringState, action: CateringAction): Catering
       return {
         ...state,
         orderType: action.payload,
+        currentStep: 4,
       };
     }
 
@@ -180,7 +180,7 @@ function cateringReducer(state: CateringState, action: CateringAction): Catering
     }
 
     case 'GO_BACK': {
-      const prevStep = Math.max(1, state.currentStep - 1) as 1 | 2;
+      const prevStep = Math.max(1, state.currentStep - 1) as 1 | 2 | 3 | 4;
       return {
         ...state,
         currentStep: prevStep,

@@ -12,11 +12,11 @@ interface BudgetCardProps {
 export default function BudgetCard({ budget, isSelected, onSelect }: BudgetCardProps) {
   const getBudgetIcon = (id: string) => {
     switch (id) {
-      case 'budget-10-15':
+      case 'budget-20-25':
         return '💵';
-      case 'budget-15-25':
-        return '💰';
       case 'budget-25-40':
+        return '💰';
+      case 'budget-40-plus':
         return '💎';
       case 'budget-custom':
         return '✨';
