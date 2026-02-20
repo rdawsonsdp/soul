@@ -114,8 +114,10 @@ const DELIVERY_TIMES = [
 
 export default function CheckoutPage() {
   const router = useRouter();
-  const { state, calculatedItems, totalCost } = useCatering();
+  const { state, dispatch, calculatedItems, totalCost } = useCatering();
   const [currentStep, setCurrentStep] = useState(1); // 1 = details, 2 = confirmation
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
   const [formData, setFormData] = useState<FormData>({
     firstName: '',
     lastName: '',
@@ -204,10 +206,95 @@ export default function CheckoutPage() {
     }
   };
 
-  const handleSubmitOrder = () => {
-    // TODO: Submit order to backend
-    alert('Order submitted! (This would integrate with your payment processor)');
-    router.push('/');
+  const handleSubmitOrder = async () => {
+    setIsSubmitting(true);
+    setSubmitError(null);
+
+    try {
+      // Save order details to sessionStorage for confirmation page
+      const orderNumber = `SD-${String(Math.floor(1000 + Math.random() * 9000))}`;
+      const orderDetails = {
+        orderNumber,
+        items: calculatedItems.map(item => ({
+          title: item.product.title,
+          displayText: item.displayText,
+          totalPrice: item.totalPrice,
+        })),
+        headcount: state.headcount,
+        eventType: state.eventType,
+        subtotal: totalCost,
+        deliveryFee,
+        orderTotal,
+        perPerson: orderTotal / state.headcount,
+        contact: {
+          firstName: formData.firstName,
+          lastName: formData.lastName,
+          email: formData.email,
+          phone: formData.phone,
+          company: formData.company,
+        },
+        delivery: {
+          address: formData.address,
+          address2: formData.address2,
+          city: formData.city,
+          state: formData.state,
+          zip: formData.zip,
+        },
+        event: {
+          date: formData.eventDate,
+          time: formData.deliveryTime,
+          setupRequired: formData.setupRequired,
+          specialInstructions: formData.specialInstructions,
+        },
+      };
+
+      sessionStorage.setItem('last-order-details', JSON.stringify(orderDetails));
+
+      // Call the API endpoint
+      const response = await fetch('/api/create-catering-order', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          items: calculatedItems.map(item => ({
+            productId: item.product.id,
+            title: item.product.title,
+            quantity: item.quantity,
+            unitPrice: item.unitPrice,
+            totalPrice: item.totalPrice,
+            selectedSize: item.selectedSize,
+            displayText: item.displayText,
+          })),
+          headcount: state.headcount,
+          eventType: state.eventType,
+          buyerInfo: {
+            name: `${formData.firstName} ${formData.lastName}`,
+            email: formData.email,
+            phone: formData.phone,
+            company: formData.company,
+            eventDate: formData.eventDate,
+            eventTime: formData.deliveryTime,
+            deliveryAddress: `${formData.address}${formData.address2 ? ', ' + formData.address2 : ''}, ${formData.city}, ${formData.state} ${formData.zip}`,
+            notes: formData.specialInstructions,
+          },
+          setupRequired: formData.setupRequired,
+          deliveryFee,
+          orderTotal,
+        }),
+      });
+
+      if (!response.ok) {
+        const data = await response.json().catch(() => ({}));
+        throw new Error(data.error || 'Failed to submit order');
+      }
+
+      // Reset the catering state and redirect
+      dispatch({ type: 'RESET' });
+      router.push('/order-confirmation');
+    } catch (error) {
+      setSubmitError(error instanceof Error ? error.message : 'Something went wrong. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   // Get minimum date (tomorrow)
@@ -632,15 +719,35 @@ export default function CheckoutPage() {
                   </div>
                 </Card>
 
+                {submitError && (
+                  <div className="flex items-start gap-3 p-4 rounded-lg border bg-red-50 border-red-200 text-red-800 mb-4">
+                    <svg className="w-5 h-5 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <div className="text-sm">{submitError}</div>
+                  </div>
+                )}
+
                 <div className="flex gap-4">
                   <button
                     onClick={() => setCurrentStep(1)}
-                    className="flex-1 px-6 py-3 border-2 border-[#363333] text-[#363333] font-oswald font-bold rounded-lg hover:bg-[#363333] hover:text-white transition-colors"
+                    disabled={isSubmitting}
+                    className="flex-1 px-6 py-3 border-2 border-[#363333] text-[#363333] font-oswald font-bold rounded-lg hover:bg-[#363333] hover:text-white transition-colors disabled:opacity-50"
                   >
                     Edit Details
                   </button>
-                  <Button onClick={handleSubmitOrder} className="flex-1">
-                    Submit Order
+                  <Button onClick={handleSubmitOrder} className="flex-1" disabled={isSubmitting}>
+                    {isSubmitting ? (
+                      <span className="flex items-center gap-2">
+                        <svg className="animate-spin w-5 h-5" fill="none" viewBox="0 0 24 24">
+                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                        </svg>
+                        Submitting...
+                      </span>
+                    ) : (
+                      'Submit Order'
+                    )}
                   </Button>
                 </div>
               </div>
@@ -689,6 +796,37 @@ export default function CheckoutPage() {
                     </div>
                   ))}
                 </div>
+              </div>
+
+              {/* Trust Signals */}
+              <div className="mt-6 pt-4 border-t border-gray-200 space-y-3">
+                <div className="flex items-center gap-2 text-sm text-gray-600">
+                  <svg className="w-4 h-4 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                  </svg>
+                  On-time delivery guaranteed
+                </div>
+                <div className="flex items-center gap-2 text-sm text-gray-600">
+                  <svg className="w-4 h-4 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                  Full setup included
+                </div>
+                <div className="flex items-center gap-2 text-sm text-gray-600">
+                  <svg className="w-4 h-4 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                  Satisfaction guaranteed
+                </div>
+              </div>
+
+              {/* Support */}
+              <div className="mt-4 pt-4 border-t border-gray-200">
+                <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Need Help?</p>
+                <a href="tel:3126008155" className="text-sm text-[#dabb64] hover:text-[#363333] transition-colors font-semibold">
+                  (312) 600-8155
+                </a>
+                <p className="text-xs text-gray-400 mt-1">Call, email, or text us anytime</p>
               </div>
             </Card>
           </div>
