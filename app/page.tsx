@@ -4,10 +4,33 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useCatering } from '@/context/CateringContext';
 import { EVENT_TYPES } from '@/lib/event-types';
+import StepIndicator from '@/components/catering/StepIndicator';
+import HeadcountBudgetStep from '@/components/catering/HeadcountBudgetStep';
+import OrderTypeStep from '@/components/catering/OrderTypeStep';
 import ProductSelectionStep from '@/components/catering/ProductSelectionStep';
+import PackageSelectionStep from '@/components/catering/PackageSelectionStep';
+import ValueProposition from '@/components/marketing/ValueProposition';
+import TrustSignals from '@/components/marketing/TrustSignals';
+import ClientLogos from '@/components/marketing/ClientLogos';
+import TestimonialsSection from '@/components/marketing/TestimonialsSection';
+import DietaryFilterBar from '@/components/catering/DietaryFilterBar';
+import RecommendedItems from '@/components/catering/RecommendedItems';
+import { useState, useEffect } from 'react';
 
 export default function HomePage() {
   const { state, dispatch } = useCatering();
+  const [activeFilters, setActiveFilters] = useState<string[]>([]);
+  const [promoBannerVisible, setPromoBannerVisible] = useState(true);
+
+  useEffect(() => {
+    const dismissed = sessionStorage.getItem('promo-banner-dismissed');
+    if (dismissed) setPromoBannerVisible(false);
+  }, []);
+
+  const handleDismissPromo = () => {
+    setPromoBannerVisible(false);
+    sessionStorage.setItem('promo-banner-dismissed', 'true');
+  };
 
   const handleSelectEventType = (eventTypeId: string) => {
     dispatch({
@@ -16,11 +39,19 @@ export default function HomePage() {
     });
   };
 
+  const handleToggleFilter = (tag: string) => {
+    setActiveFilters(prev =>
+      prev.includes(tag)
+        ? prev.filter(f => f !== tag)
+        : [...prev, tag]
+    );
+  };
+
   return (
     <div className="min-h-screen bg-[#f7efd7]">
       {/* Hero Section */}
       <section className="relative">
-        {/* Two-Image Hero - Smaller on mobile */}
+        {/* Two-Image Hero */}
         <div className="grid grid-cols-2 md:grid-cols-2">
           <div className="relative h-[120px] sm:h-[200px] md:h-[350px] lg:h-[450px] overflow-hidden">
             <Image
@@ -42,7 +73,7 @@ export default function HomePage() {
           </div>
         </div>
 
-        {/* Title Banner - Black */}
+        {/* Title Banner */}
         <div className="bg-[#363333] py-8 sm:py-10 text-center">
           <h1 className="font-oswald text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-[#f7efd7] tracking-wider mb-2">
             SOUL DELIVERED
@@ -63,8 +94,47 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Value Proposition */}
+      <ValueProposition />
+
+      {/* Promotional Banner */}
+      {promoBannerVisible && (
+        <div className="bg-[#363333] py-3 relative">
+          <div className="container mx-auto px-4 text-center">
+            <p className="text-white text-sm sm:text-base">
+              <span className="text-[#dabb64] font-bold">FREE SETUP</span> on orders over $500 —{' '}
+              <a href="#catering" className="underline hover:text-[#dabb64] transition-colors">
+                Start your order today
+              </a>
+            </p>
+            <button
+              onClick={handleDismissPromo}
+              className="absolute right-4 top-1/2 -translate-y-1/2 text-white/50 hover:text-white transition-colors"
+              aria-label="Dismiss promotion"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Trust Signals */}
+      <TrustSignals />
+
+      {/* Client Logos */}
+      <ClientLogos />
+
+      {/* Step Indicator */}
+      <section id="catering" className="bg-[#f7efd7] pt-12 sm:pt-16">
+        <div className="container mx-auto px-4">
+          <StepIndicator currentStep={state.currentStep} />
+        </div>
+      </section>
+
       {/* Step 1: Event Type Selection */}
-      <section id="catering" className="bg-[#f7efd7] py-12 sm:py-16">
+      <section className="bg-[#f7efd7] pb-12 sm:pb-16">
         <div className="container mx-auto px-4">
           <div className="text-center mb-10">
             <h2 className="font-oswald text-3xl sm:text-4xl md:text-5xl font-bold text-[#363333] tracking-wider mb-4">
@@ -102,16 +172,13 @@ export default function HomePage() {
                       }
                     `}
                   >
-                    {/* Background Image */}
                     <Image
                       src={eventImages[eventType.id] || '/images/Yogurt Parfait Shot High Res.png'}
                       alt={eventType.name}
                       fill
                       className="object-cover"
                     />
-                    {/* Overlay */}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
-                    {/* Content */}
                     <div className="absolute inset-0 flex flex-col items-center justify-end p-6 text-center">
                       <h3 className="font-oswald text-2xl sm:text-3xl font-bold text-white mb-2 tracking-wide drop-shadow-lg">
                         {eventType.name.toUpperCase()}
@@ -128,10 +195,39 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Step 2: Build Your Event */}
+      {/* Step 2: Headcount & Budget */}
       {state.currentStep >= 2 && (
-        <ProductSelectionStep />
+        <HeadcountBudgetStep />
       )}
+
+      {/* Step 3: Order Type */}
+      {state.currentStep >= 3 && (
+        <OrderTypeStep />
+      )}
+
+      {/* Step 4: Product or Package Selection */}
+      {state.currentStep >= 4 && (
+        state.orderType === 'packages' ? (
+          <PackageSelectionStep />
+        ) : (
+          <ProductSelectionStep
+            activeFilters={activeFilters}
+            onToggleFilter={handleToggleFilter}
+            filterBar={
+              <DietaryFilterBar
+                activeTags={activeFilters}
+                onToggleTag={handleToggleFilter}
+              />
+            }
+            recommendedSection={
+              <RecommendedItems />
+            }
+          />
+        )
+      )}
+
+      {/* Testimonials Section */}
+      <TestimonialsSection />
 
       {/* Browse Full Menu Link */}
       <section className="bg-[#363333] py-12 sm:py-16">
