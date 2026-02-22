@@ -72,20 +72,27 @@ export default function HeadcountBudgetStep() {
           </div>
 
           {/* Quick-select pills */}
-          <div className="flex flex-wrap justify-center gap-2">
-            {quickHeadcounts.map((n) => (
-              <button
-                key={n}
-                onClick={() => handleHeadcountChange(n)}
-                className={`px-4 py-2 rounded-full text-sm font-semibold transition-colors ${
-                  state.headcount === n
-                    ? 'bg-[#363333] text-white'
-                    : 'bg-[#f7efd7] text-gray-600 hover:bg-[#dabb64]/30 hover:text-[#363333]'
-                }`}
-              >
-                {n} guests
-              </button>
-            ))}
+          <div className="flex flex-wrap justify-center gap-3">
+            {quickHeadcounts.map((n) => {
+              const isSelected = state.headcount === n;
+              const isUnselected = !isSelected;
+
+              return (
+                <button
+                  key={n}
+                  onClick={() => handleHeadcountChange(n)}
+                  className={`px-5 py-3 rounded-xl text-sm font-bold transition-all duration-300 border-2 ${
+                    isSelected
+                      ? 'bg-[#363333] text-white border-[#363333] scale-[1.02] shadow-md'
+                      : isUnselected
+                        ? 'bg-[#f7efd7] text-gray-600 border-transparent opacity-50 grayscale hover:opacity-100 hover:grayscale-0 hover:bg-[#dabb64]/30 hover:text-[#363333]'
+                        : 'bg-[#f7efd7] text-gray-600 border-transparent hover:bg-[#dabb64]/30 hover:text-[#363333]'
+                  }`}
+                >
+                  {n} guests
+                </button>
+              );
+            })}
           </div>
         </div>
 
@@ -104,6 +111,7 @@ export default function HeadcountBudgetStep() {
                 key={budget.id}
                 budget={budget}
                 isSelected={state.budgetRange?.id === budget.id}
+                hasSelection={!!state.budgetRange}
                 onSelect={() => handleSelectBudget(budget)}
               />
             ))}

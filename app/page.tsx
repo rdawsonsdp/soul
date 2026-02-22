@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useEffect, useState } from 'react';
+import { useRef, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useCatering } from '@/context/CateringContext';
@@ -20,17 +20,6 @@ import RecommendedItems from '@/components/catering/RecommendedItems';
 export default function HomePage() {
   const { state, dispatch } = useCatering();
   const [activeFilters, setActiveFilters] = useState<string[]>([]);
-  const [promoBannerVisible, setPromoBannerVisible] = useState(true);
-
-  useEffect(() => {
-    const dismissed = sessionStorage.getItem('promo-banner-dismissed');
-    if (dismissed) setPromoBannerVisible(false);
-  }, []);
-
-  const handleDismissPromo = () => {
-    setPromoBannerVisible(false);
-    sessionStorage.setItem('promo-banner-dismissed', 'true');
-  };
 
   const handleSelectEventType = (eventTypeId: string) => {
     dispatch({
@@ -85,7 +74,7 @@ export default function HomePage() {
             URBAN BISTRO
           </h1>
           <p className="font-oswald text-base sm:text-xl md:text-[2.5rem] font-bold text-[#dabb64] tracking-wider whitespace-nowrap">
-            EXCEPTIONAL FOOD. FLAWLESS DELIVERY. SEAMLESS SETUP.
+            THE RIGHT FOOD. THE RIGHT AMOUNT. EVERY EVENT.
           </p>
         </div>
 
@@ -99,30 +88,7 @@ export default function HomePage() {
       {/* Value Proposition */}
       <ValueProposition />
 
-      {/* Promotional Banner */}
-      {promoBannerVisible && (
-        <div className="bg-[#363333] py-3 relative">
-          <div className="container mx-auto px-4 text-center">
-            <p className="text-white text-sm sm:text-base">
-              <span className="text-[#dabb64] font-bold">FREE SETUP</span> on orders over $500 —{' '}
-              <a href="#catering" className="underline hover:text-[#dabb64] transition-colors">
-                Start your order today
-              </a>
-            </p>
-            <button
-              onClick={handleDismissPromo}
-              className="absolute right-4 top-1/2 -translate-y-1/2 text-white/50 hover:text-white transition-colors"
-              aria-label="Dismiss promotion"
-            >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </button>
-          </div>
-        </div>
-      )}
-
-      {/* Trust Signals */}
+      {/* How It Works */}
       <TrustSignals />
 
       {/* Client Logos */}

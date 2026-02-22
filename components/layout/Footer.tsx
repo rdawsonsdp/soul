@@ -18,7 +18,7 @@ export default function Footer() {
               className="h-10 w-auto mb-4"
             />
             <p className="text-gray-400 text-sm">
-              Exceptional food. Flawless delivery. Seamless setup.
+              The right food. The right amount. Every event.
             </p>
           </div>
 

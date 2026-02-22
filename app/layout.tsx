@@ -17,9 +17,9 @@ const robotoCondensed = Roboto_Condensed({
 });
 
 export const metadata: Metadata = {
-  title: 'Urban Bistro | Exceptional Food. Flawless Delivery.',
+  title: 'CaterPro | The right food. The right amount. Every event.',
   description:
-    'Urban Bistro offers exceptional catering for corporate events, meetings, and special occasions. Premium food with flawless delivery and seamless setup.',
+    'CaterPro offers exceptional catering for corporate events, meetings, and special occasions. The right food, the right amount, every event.',
   appleWebApp: {
     capable: true,
     statusBarStyle: 'default',

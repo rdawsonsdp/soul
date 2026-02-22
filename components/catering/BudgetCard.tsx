@@ -6,10 +6,12 @@ import { BudgetRange } from '@/lib/types';
 interface BudgetCardProps {
   budget: BudgetRange;
   isSelected: boolean;
+  hasSelection: boolean;
   onSelect: () => void;
 }
 
-export default function BudgetCard({ budget, isSelected, onSelect }: BudgetCardProps) {
+export default function BudgetCard({ budget, isSelected, hasSelection, onSelect }: BudgetCardProps) {
+  const isUnselected = hasSelection && !isSelected;
   const getBudgetIcon = (id: string) => {
     switch (id) {
       case 'budget-20-25':
@@ -29,8 +31,10 @@ export default function BudgetCard({ budget, isSelected, onSelect }: BudgetCardP
     <Card
       className={`text-center hover-lift cursor-pointer transition-all duration-300 ${
         isSelected
-          ? 'ring-2 ring-primary-brown bg-primary-brown/5'
-          : 'hover:ring-2 hover:ring-accent-gold/50'
+          ? 'ring-2 ring-primary-brown bg-primary-brown/5 scale-[1.02]'
+          : isUnselected
+            ? 'opacity-50 grayscale hover:opacity-100 hover:grayscale-0 hover:ring-2 hover:ring-accent-gold/50'
+            : 'hover:ring-2 hover:ring-accent-gold/50'
       }`}
       onClick={onSelect}
     >

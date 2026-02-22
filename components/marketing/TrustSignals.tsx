@@ -1,49 +1,69 @@
 'use client';
 
-const TRUST_BADGES = [
+const PROCESS_STEPS = [
   {
     icon: (
-      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+      <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
       </svg>
     ),
-    label: 'On-Time Guarantee',
+    step: '1',
+    title: 'Order Online',
+    description: 'Browse our menu and place your catering order in minutes — no calls or emails required.',
   },
   {
     icon: (
-      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+      <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 7a4 4 0 11-8 0 4 4 0 018 0z" />
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17.5 11l1.5-1.5M19 9.5l2 2" />
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 9.5c0 0 1-2 2.5-2" />
       </svg>
     ),
-    label: 'Full Setup Included',
+    step: '2',
+    title: 'We Confirm',
+    description: 'Our team reviews every order and confirms the details with you within 24 hours.',
   },
   {
     icon: (
-      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+      <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
       </svg>
     ),
-    label: 'Premium Presentation',
-  },
-  {
-    icon: (
-      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5" />
-      </svg>
-    ),
-    label: 'Satisfaction Guaranteed',
+    step: '3',
+    title: 'Pay & You\'re Set',
+    description: 'Complete payment at least 48 hours before your event, and we\'ll handle the rest.',
   },
 ];
 
 export default function TrustSignals() {
   return (
-    <section className="bg-[#f7efd7] py-6 border-y border-[#dabb64]/30">
+    <section className="bg-[#f7efd7] py-10 sm:py-14 border-y border-[#dabb64]/30">
       <div className="container mx-auto px-4">
-        <div className="flex flex-wrap items-center justify-center gap-6 sm:gap-10">
-          {TRUST_BADGES.map((badge, index) => (
-            <div key={index} className="flex items-center gap-2 text-[#363333]">
-              <span className="text-[#dabb64]">{badge.icon}</span>
-              <span className="text-xs sm:text-sm font-semibold whitespace-nowrap">{badge.label}</span>
+        <h2 className="text-center text-2xl sm:text-3xl font-bold text-[#363333] mb-2">
+          How It Works
+        </h2>
+        <p className="text-center text-sm sm:text-base text-[#363333]/60 mb-8 sm:mb-10">
+          Three simple steps to a perfectly catered event.
+        </p>
+        <div className="flex flex-col sm:flex-row items-center sm:items-start justify-center gap-8 sm:gap-6 lg:gap-12 max-w-4xl mx-auto">
+          {PROCESS_STEPS.map((step, index) => (
+            <div key={index} className="flex flex-col items-center text-center flex-1 max-w-[260px] relative">
+              {index < PROCESS_STEPS.length - 1 && (
+                <div className="hidden sm:block absolute top-8 left-[calc(50%+40px)] w-[calc(100%-40px)] lg:w-[calc(100%-20px)]">
+                  <svg className="w-full h-4 text-[#dabb64]/40" viewBox="0 0 100 16" preserveAspectRatio="none">
+                    <path d="M0 8h90M85 3l7 5-7 5" stroke="currentColor" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </div>
+              )}
+              <div className="w-16 h-16 rounded-full bg-[#363333] text-[#dabb64] flex items-center justify-center mb-4">
+                {step.icon}
+              </div>
+              <span className="text-xs font-bold text-[#dabb64] tracking-widest uppercase mb-1">
+                Step {step.step}
+              </span>
+              <h3 className="text-lg font-bold text-[#363333] mb-2">{step.title}</h3>
+              <p className="text-sm text-[#363333]/70 leading-relaxed">{step.description}</p>
             </div>
           ))}
         </div>
