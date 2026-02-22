@@ -92,6 +92,7 @@ export function calculateProductOrder(
         displayText: quantity === 1
           ? `${sizeLabel} Tray (serves ${size.servesMin}-${size.servesMax})`
           : `${quantity} ${sizeLabel} Trays (serves ${totalServesMin}-${totalServesMax})`,
+        itemQuantity: 1,
       };
     }
 
@@ -112,6 +113,7 @@ export function calculateProductOrder(
         displayText: quantity === 1
           ? `${sizeLabel} (serves ${size.servesMin}-${size.servesMax})`
           : `${quantity} ${sizeLabel}s (serves ${totalServesMin}-${totalServesMax})`,
+        itemQuantity: 1,
       };
     }
 
@@ -126,6 +128,7 @@ export function calculateProductOrder(
         servesMin: quantity,
         servesMax: quantity,
         displayText: `${quantity} servings @ ${formatCurrency(pricing.pricePerPerson)}/person`,
+        itemQuantity: 1,
       };
     }
 
@@ -142,6 +145,7 @@ export function calculateProductOrder(
         displayText: dozensNeeded === 1
           ? `1 dozen (serves ${pricing.servesPerDozen})`
           : `${dozensNeeded} dozen (serves ${totalServes})`,
+        itemQuantity: 1,
       };
     }
 
@@ -156,6 +160,7 @@ export function calculateProductOrder(
         servesMin: quantity,
         servesMax: quantity,
         displayText: `${quantity} @ ${formatCurrency(pricing.priceEach)} each`,
+        itemQuantity: 1,
       };
     }
 
@@ -172,6 +177,7 @@ export function calculateProductOrder(
         displayText: containersNeeded === 1
           ? `1 container (serves ${pricing.servesPerContainer})`
           : `${containersNeeded} containers (serves ${totalServes})`,
+        itemQuantity: 1,
       };
     }
 
@@ -184,6 +190,7 @@ export function calculateProductOrder(
         servesMin: 0,
         servesMax: 0,
         displayText: 'Unknown pricing',
+        itemQuantity: 1,
       };
   }
 }
@@ -195,7 +202,14 @@ export function calculateAllOrderItems(
   items: SelectedCateringItem[],
   headcount: number
 ): CalculatedOrderItem[] {
-  return items.map(item => calculateProductOrder(item.product, headcount));
+  return items.map(item => {
+    const calc = calculateProductOrder(item.product, headcount);
+    return {
+      ...calc,
+      itemQuantity: item.quantity,
+      totalPrice: calc.totalPrice * item.quantity,
+    };
+  });
 }
 
 /**

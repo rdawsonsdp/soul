@@ -11,11 +11,11 @@ export default function Footer() {
           {/* Logo & Brand */}
           <div className="md:col-span-1">
             <Image
-              src="/images/SOUL DELIVERED NEW LOGO.png"
-              alt="Soul Delivered"
-              width={100}
-              height={100}
-              className="mb-4"
+              src="/images/CaterPro.png"
+              alt="CaterPro"
+              width={160}
+              height={50}
+              className="h-10 w-auto mb-4"
             />
             <p className="text-gray-400 text-sm">
               Exceptional food. Flawless delivery. Seamless setup.
@@ -69,8 +69,8 @@ export default function Footer() {
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                 </svg>
-                <a href="mailto:info@souldelivered.com" className="hover:text-white transition-colors">
-                  info@souldelivered.com
+                <a href="mailto:info@urbanbistro.com" className="hover:text-white transition-colors">
+                  info@urbanbistro.com
                 </a>
               </li>
             </ul>
@@ -103,7 +103,7 @@ export default function Footer() {
 
         {/* Bottom bar */}
         <div className="border-t border-gray-800 mt-8 pt-8 text-center text-sm text-gray-500">
-          <p>&copy; {currentYear} Soul Delivered. All rights reserved.</p>
+          <p>&copy; {currentYear} Urban Bistro. All rights reserved.</p>
         </div>
       </div>
     </footer>

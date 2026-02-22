@@ -8,7 +8,7 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        // Soul Delivered Brand Colors
+        // Urban Bistro Brand Colors
         cream: '#f7efd7',
         'primary-brown': '#363333',
         'accent-gold': '#dabb64',

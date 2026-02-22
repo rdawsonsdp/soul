@@ -1,5 +1,6 @@
 'use client';
 
+import { useRef, useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useCatering } from '@/context/CateringContext';
@@ -15,7 +16,6 @@ import ClientLogos from '@/components/marketing/ClientLogos';
 import TestimonialsSection from '@/components/marketing/TestimonialsSection';
 import DietaryFilterBar from '@/components/catering/DietaryFilterBar';
 import RecommendedItems from '@/components/catering/RecommendedItems';
-import { useState, useEffect } from 'react';
 
 export default function HomePage() {
   const { state, dispatch } = useCatering();
@@ -37,6 +37,12 @@ export default function HomePage() {
       type: 'SET_EVENT_TYPE',
       payload: eventTypeId as 'breakfast' | 'lunch' | 'dessert',
     });
+  };
+
+  const eventImages: Record<string, string> = {
+    breakfast: '/images/Shrimp and Grits Shot High Res.png',
+    lunch: '/images/Stacked Sandwiches Hi Res Shot.png',
+    dessert: '/images/BSB Chocolate Chip Cookies Hi Res Shot.png',
   };
 
   const handleToggleFilter = (tag: string) => {
@@ -76,21 +82,17 @@ export default function HomePage() {
         {/* Title Banner */}
         <div className="bg-[#363333] py-8 sm:py-10 text-center">
           <h1 className="font-oswald text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-[#f7efd7] tracking-wider mb-2">
-            SOUL DELIVERED
+            URBAN BISTRO
           </h1>
           <p className="font-oswald text-base sm:text-xl md:text-[2.5rem] font-bold text-[#dabb64] tracking-wider whitespace-nowrap">
             EXCEPTIONAL FOOD. FLAWLESS DELIVERY. SEAMLESS SETUP.
           </p>
         </div>
 
-        {/* Gold Banner with CTA */}
         <div className="bg-[#dabb64] py-4 text-center">
-          <a
-            href="#catering"
-            className="inline-block font-oswald text-sm sm:text-base tracking-wide border-2 border-[#363333] px-6 py-3 bg-[#f7efd7] text-[#363333] hover:bg-[#363333] hover:text-white transition-all"
-          >
+          <p className="font-oswald text-sm sm:text-base tracking-wide text-[#363333]">
             Plan your next remarkable event!
-          </a>
+          </p>
         </div>
       </section>
 
@@ -145,55 +147,52 @@ export default function HomePage() {
             </p>
           </div>
 
-          {/* Event Type Cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-4xl mx-auto">
-            {EVENT_TYPES.map((eventType, index) => {
-              const eventImages: Record<string, string> = {
-                breakfast: '/images/Shrimp and Grits Shot High Res.png',
-                lunch: '/images/Stacked Sandwiches Hi Res Shot.png',
-                dessert: '/images/BSB Chocolate Chip Cookies Hi Res Shot.png',
-              };
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-4xl mx-auto">
+                {EVENT_TYPES.map((eventType, index) => {
+                  const isSelected = state.eventType === eventType.id;
+                  const isUnselected = state.eventType && state.eventType !== eventType.id;
 
-              return (
-                <div
-                  key={eventType.id}
-                  className="animate-scale-in"
-                  style={{ animationDelay: `${index * 0.1}s` }}
-                >
-                  <div
-                    onClick={() => handleSelectEventType(eventType.id)}
-                    className={`
-                      relative overflow-hidden rounded-xl cursor-pointer
-                      transition-all duration-300 hover:scale-105 shadow-md
-                      h-[180px] sm:h-[240px] md:h-[320px]
-                      ${state.eventType === eventType.id
-                        ? 'ring-4 ring-[#dabb64]'
-                        : ''
-                      }
-                    `}
-                  >
-                    <Image
-                      src={eventImages[eventType.id] || '/images/Yogurt Parfait Shot High Res.png'}
-                      alt={eventType.name}
-                      fill
-                      className="object-cover"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
-                    <div className="absolute inset-0 flex flex-col items-center justify-end p-6 text-center">
-                      <h3 className="font-oswald text-2xl sm:text-3xl font-bold text-white mb-2 tracking-wide drop-shadow-lg">
-                        {eventType.name.toUpperCase()}
-                      </h3>
-                      <p className="text-white/90 text-sm sm:text-base drop-shadow">
-                        {eventType.description}
-                      </p>
+                  return (
+                    <div
+                      key={eventType.id}
+                      className="animate-scale-in"
+                      style={{ animationDelay: `${index * 0.1}s` }}
+                    >
+                      <div
+                        onClick={() => handleSelectEventType(eventType.id)}
+                        className={`
+                          relative overflow-hidden rounded-xl cursor-pointer
+                          transition-all duration-300 shadow-md
+                          h-[180px] sm:h-[240px] md:h-[320px]
+                          ${isSelected
+                            ? 'ring-4 ring-[#dabb64] scale-[1.02]'
+                            : 'hover:scale-105'
+                          }
+                          ${isUnselected ? 'opacity-50 grayscale' : ''}
+                        `}
+                      >
+                        <Image
+                          src={eventImages[eventType.id] || '/images/Yogurt Parfait Shot High Res.png'}
+                          alt={eventType.name}
+                          fill
+                          className="object-cover"
+                        />
+                        <div className={`absolute inset-0 ${isSelected ? 'bg-gradient-to-t from-black/70 via-black/30 to-transparent' : 'bg-gradient-to-t from-black/80 via-black/40 to-transparent'}`} />
+                        <div className="absolute inset-0 flex flex-col items-center justify-end p-6 text-center">
+                          <h3 className="font-oswald text-2xl sm:text-3xl font-bold text-white mb-2 tracking-wide drop-shadow-lg">
+                            {eventType.name.toUpperCase()}
+                          </h3>
+                          <p className="text-white/90 text-sm sm:text-base drop-shadow">
+                            {eventType.description}
+                          </p>
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
+                  );
+                })}
+              </div>
+            </div>
+          </section>
 
       {/* Step 2: Headcount & Budget */}
       {state.currentStep >= 2 && (

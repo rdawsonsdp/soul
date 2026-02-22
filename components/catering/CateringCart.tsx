@@ -85,7 +85,7 @@ export default function CateringCart({ onCheckout }: CateringCartProps) {
 
   return (
     <>
-      <Card className="sticky top-20 sm:top-24 lg:top-4 animate-scale-in delay-200 bg-[#f7efd7]" hover={false}>
+      <Card className="animate-scale-in delay-200 bg-[#f7efd7]" hover={false}>
         {/* Header */}
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-lg sm:text-xl font-oswald font-bold text-[#363333] tracking-wide">
@@ -219,7 +219,7 @@ export default function CateringCart({ onCheckout }: CateringCartProps) {
                 >
                   <div className="flex-1 min-w-0 pr-2">
                     <p className="font-oswald font-semibold text-[#363333] text-sm truncate">
-                      {item.product.title}
+                      {item.itemQuantity > 1 ? `${item.itemQuantity} × ` : ''}{item.product.title}
                     </p>
                     <p className="text-xs text-[#8B7355] mt-0.5">
                       {item.displayText}

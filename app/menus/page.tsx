@@ -13,7 +13,7 @@ const MENU_SECTIONS = [
   {
     id: 'breakfast',
     title: 'BREAKFAST',
-    subtitle: 'Start Your Day with Soul',
+    subtitle: 'Start Your Day Right',
     image: '/images/Shrimp and Grits Shot High Res.png',
     subsections: [
       { id: 'sunrise-staples', title: 'Sunrise Staples', description: 'Light bites to start your morning' },
@@ -238,7 +238,7 @@ export default function MenusPage() {
               OUR MENUS
             </h1>
             <p className="text-[#dabb64] text-lg sm:text-xl max-w-2xl mx-auto">
-              Exceptional food crafted with soul. Browse our complete catering menu featuring over 90 delicious items.
+              Exceptional food crafted with care. Browse our complete catering menu featuring over 90 delicious items.
             </p>
           </div>
         </div>

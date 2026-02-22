@@ -17,13 +17,13 @@ const robotoCondensed = Roboto_Condensed({
 });
 
 export const metadata: Metadata = {
-  title: 'Soul Delivered | Exceptional Food. Flawless Delivery.',
+  title: 'Urban Bistro | Exceptional Food. Flawless Delivery.',
   description:
-    'Soul Delivered offers exceptional catering for corporate events, meetings, and special occasions. Premium food with flawless delivery and seamless setup.',
+    'Urban Bistro offers exceptional catering for corporate events, meetings, and special occasions. Premium food with flawless delivery and seamless setup.',
   appleWebApp: {
     capable: true,
     statusBarStyle: 'default',
-    title: 'Soul Delivered',
+    title: 'Urban Bistro',
   },
 };
 

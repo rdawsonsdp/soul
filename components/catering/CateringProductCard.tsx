@@ -6,18 +6,20 @@ import { useCatering } from '@/context/CateringContext';
 import Card from '@/components/ui/Card';
 import Button from '@/components/ui/Button';
 import Badge from '@/components/ui/Badge';
-import { getDisplayPrice, getPricingTypeLabel, calculateProductOrder, formatCurrency } from '@/lib/pricing';
+import { getPricingTypeLabel, calculateProductOrder, formatCurrency } from '@/lib/pricing';
 
 interface CateringProductCardProps {
   product: CateringProduct;
 }
 
 export default function CateringProductCard({ product }: CateringProductCardProps) {
-  const { state, dispatch, isItemInCart } = useCatering();
+  const { state, dispatch, isItemInCart, getItemQuantity } = useCatering();
   const inCart = isItemInCart(product.id);
+  const itemQty = getItemQuantity(product.id);
 
   // Calculate what the customer will get based on current headcount
   const orderCalc = calculateProductOrder(product, state.headcount);
+  const displayTotal = orderCalc.totalPrice * (itemQty || 1);
 
   const handleAdd = () => {
     dispatch({ type: 'ADD_ITEM', payload: product });
@@ -27,12 +29,20 @@ export default function CateringProductCard({ product }: CateringProductCardProp
     dispatch({ type: 'REMOVE_ITEM', payload: product.id });
   };
 
+  const handleUpdateQuantity = (newQty: number) => {
+    if (newQty <= 0) {
+      handleRemove();
+    } else {
+      dispatch({ type: 'UPDATE_ITEM_QUANTITY', payload: { productId: product.id, quantity: newQty } });
+    }
+  };
+
   return (
     <Card className="flex flex-col h-full hover-lift group relative overflow-hidden bg-[#f7efd7]">
       {/* Decorative gradient overlay on hover */}
-      <div className="absolute inset-0 bg-gradient-to-br from-black/5 via-transparent to-[#dabb64]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-0" />
+      <div className="absolute inset-0 bg-gradient-to-br from-black/5 via-transparent to-[#dabb64]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-0 pointer-events-none" />
 
-      <div className="relative z-10">
+      <div className="relative z-10 flex flex-col h-full">
         {/* Product Image */}
         <div className="aspect-square bg-gray-200 rounded-lg mb-3 sm:mb-4 overflow-hidden relative">
           {product.image ? (
@@ -65,7 +75,7 @@ export default function CateringProductCard({ product }: CateringProductCardProp
           {inCart && (
             <div className="absolute top-2 left-2">
               <Badge variant="success">
-                In Cart
+                In Cart{itemQty > 1 ? ` (${itemQty})` : ''}
               </Badge>
             </div>
           )}
@@ -108,35 +118,52 @@ export default function CateringProductCard({ product }: CateringProductCardProp
           {product.description}
         </p>
 
-        {/* Price Display */}
+        {/* Calculated Total Price */}
         <div className="mb-3">
           <div className="text-lg sm:text-xl font-oswald font-bold text-[#363333]">
-            {getDisplayPrice(product)}
+            {formatCurrency(displayTotal)}
           </div>
           <div className="text-xs text-[#8B7355] mt-1">
-            For {state.headcount} guests: <span className="font-semibold">{orderCalc.displayText}</span>
-          </div>
-          <div className="text-xs text-[#363333] font-semibold">
-            = {formatCurrency(orderCalc.totalPrice)} ({formatCurrency(orderCalc.totalPrice / state.headcount)}/person)
+            {itemQty > 1 ? `${itemQty} × ` : ''}{orderCalc.displayText}
           </div>
         </div>
 
-        {/* Add/Remove Button */}
-        {inCart ? (
-          <div className="space-y-2">
-            <Button
-              variant="secondary"
-              onClick={handleRemove}
-              className="w-full"
-            >
-              Remove from Order
+        {/* Add/Remove Button or Quantity Stepper */}
+        <div className="mt-auto">
+          {inCart ? (
+            <div className="space-y-2">
+              {/* Quantity Stepper */}
+              <div className="flex items-center justify-between bg-white rounded-lg border border-gray-200">
+                <button
+                  onClick={() => handleUpdateQuantity(itemQty - 1)}
+                  className="w-10 h-10 flex items-center justify-center text-[#363333] hover:bg-gray-100 rounded-l-lg transition-colors font-bold text-lg"
+                  aria-label="Decrease quantity"
+                >
+                  {itemQty === 1 ? (
+                    <svg className="w-4 h-4 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                    </svg>
+                  ) : '−'}
+                </button>
+                <span className="font-oswald font-bold text-[#363333] text-lg min-w-[2rem] text-center">
+                  {itemQty}
+                </span>
+                <button
+                  onClick={() => handleUpdateQuantity(Math.min(itemQty + 1, 4))}
+                  disabled={itemQty >= 4}
+                  className="w-10 h-10 flex items-center justify-center text-[#363333] hover:bg-gray-100 rounded-r-lg transition-colors font-bold text-lg disabled:opacity-30 disabled:cursor-not-allowed"
+                  aria-label="Increase quantity"
+                >
+                  +
+                </button>
+              </div>
+            </div>
+          ) : (
+            <Button onClick={handleAdd} className="w-full">
+              Add to Order
             </Button>
-          </div>
-        ) : (
-          <Button onClick={handleAdd} className="w-full">
-            Add to Order
-          </Button>
-        )}
+          )}
+        </div>
       </div>
     </Card>
   );

@@ -119,11 +119,6 @@ export default function ProductSelectionStep({
                 {getEventTypeName(state.eventType)}
               </Badge>
             )}
-            {state.selectedItems.length > 0 && (
-              <Badge variant="default">
-                {formatCurrency(perPersonCost)}/person
-              </Badge>
-            )}
           </div>
           <h2 className="font-oswald text-3xl sm:text-4xl md:text-5xl font-bold text-[#363333] tracking-wider mb-4">
             BUILD YOUR {state.eventType?.toUpperCase() || 'EVENT'}
@@ -181,6 +176,7 @@ export default function ProductSelectionStep({
         {/* Recommended Items (injected from parent) */}
         {recommendedSection && <div className="mb-8">{recommendedSection}</div>}
 
+
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
           {/* Product Grid */}
           <div className="lg:col-span-2">
@@ -220,7 +216,9 @@ export default function ProductSelectionStep({
 
           {/* Cart Sidebar - Desktop Only */}
           <div className="hidden lg:block lg:col-span-1">
-            <CateringCart onCheckout={handleCheckout} />
+            <div className="sticky top-4 max-h-[calc(100vh-2rem)] overflow-y-auto rounded-xl">
+              <CateringCart onCheckout={handleCheckout} />
+            </div>
           </div>
         </div>
 

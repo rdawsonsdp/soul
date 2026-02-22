@@ -72,8 +72,8 @@ export const CATERING_PACKAGES: CateringPackage[] = [
   },
   {
     id: 'lunch-premium',
-    title: 'Soul Food Lunch',
-    description: 'Authentic Southern comfort food that nourishes the soul.',
+    title: 'Southern Comfort Lunch',
+    description: 'Authentic Southern comfort food that nourishes the spirit.',
     pricePerPerson: 35,
     image: '/images/Macaroni and Cheese Shot Hi Res.png',
     items: [

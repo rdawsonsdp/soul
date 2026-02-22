@@ -98,6 +98,7 @@ export interface CalculatedOrderItem {
   servesMin: number;
   servesMax: number;
   displayText: string; // e.g., "2 Half Pans - serves 20-30"
+  itemQuantity: number; // how many of this product the user ordered (1, 2, 3, etc.)
 }
 
 // Selected item in the cart (simplified for state)
