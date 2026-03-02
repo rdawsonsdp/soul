@@ -8,6 +8,7 @@ export default function Header() {
 
   const navLinks = [
     { href: '/', label: 'HOME' },
+    { href: '/menu-engineering', label: 'MENU ENGINEERING' },
     { href: 'https://www.caterpro.com', label: 'CATERPRO', external: true },
   ];
 
